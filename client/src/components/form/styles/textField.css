@@ -1,0 +1,84 @@
+.form-control-textfield {
+  margin: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-control-textfield label {
+  cursor: pointer;
+}
+
+.textfield-container {
+  margin-top: 8px;
+  position: relative;
+  max-width: 385px;
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgba(130, 143, 163, 0.25);
+  border-radius: 4px;
+}
+
+.textfield-container:hover {
+  border-color: var(--clr-variant);
+}
+
+.text-field {
+  padding-top: 8px;
+  padding-bottom: 9px;
+  padding-left: 16px;
+  width: 100%;
+  height: 100%;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23px;
+  border: 0;
+  border-radius: inherit;
+}
+
+.text-field::placeholder {
+  font-family: var(--ff-primary);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23px;
+  opacity: .25;
+}
+
+.text-field:focus {
+  outline: none;
+}
+
+.invalid-text {
+  border: 1px solid var(--clr-red);
+}
+
+.invalid-text::after {
+  content: 'Can’t be empty';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-right: 16px;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  border-radius: inherit;
+
+  color: var(--clr-red);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  pointer-events: none;
+}

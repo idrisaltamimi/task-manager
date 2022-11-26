@@ -1,0 +1,71 @@
+.form-control-checkbox *,
+.form-control-checkbox {
+  cursor: pointer;
+  transition: 200ms ease-in-out;
+}
+
+.form-control-checkbox {
+  padding-top: 13px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  max-width: 416px;
+  width: 100%;
+
+  background-color: var(--clr-grey);
+  border-radius: 4px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.form-control-checkbox:hover {
+  background-color: var(--clr-checkboxHover);
+}
+
+.label-text {
+  color: var(--clr-text);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.checkbox-input:checked~.label-text {
+  text-decoration: line-through;
+  opacity: .5;
+}
+
+.checkbox-input {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(130, 143, 163, 0.248914);
+  border-radius: 2px;
+  transform: translateY(-0.075em);
+
+  display: grid;
+  place-content: center;
+}
+
+.checkbox-input:checked {
+  background-color: var(--clr-variant);
+}
+
+.checkbox-input::before {
+  content: '';
+  width: 0.65em;
+  height: 0.65em;
+
+  transform-origin: bottom left;
+}
+
+.checkbox-input:checked::before {
+  background-color: CanvasText;
+  box-shadow: inset 1em 1em #fff;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
