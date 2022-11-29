@@ -1,14 +1,23 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 
 import App from './App'
+import { ActionsContextProvider } from './actions/actionsContext'
+import { ThemeContextProvider } from './context/ThemeContext'
+import { PortalContextProvider } from './context/PortalContext'
 import './index.css'
 
-const root = ReactDOM.createRoot(
+const root = createRoot(
   document.getElementById('root') as HTMLElement
 )
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <StrictMode>
+    <ActionsContextProvider>
+      <ThemeContextProvider>
+        <PortalContextProvider>
+          <App />
+        </PortalContextProvider>
+      </ThemeContextProvider>
+    </ActionsContextProvider>
+  </StrictMode>
 )

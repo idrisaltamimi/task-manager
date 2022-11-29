@@ -1,7 +1,6 @@
 .form-control-checkbox *,
 .form-control-checkbox {
   cursor: pointer;
-  transition: 200ms ease-in-out;
 }
 
 .form-control-checkbox {

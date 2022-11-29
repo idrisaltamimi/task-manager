@@ -14,6 +14,7 @@ interface Props {
   id: string
   textField: textField
   fn?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  type: string
 }
 
 const TextField: React.FC<Props> = ({
@@ -22,7 +23,8 @@ const TextField: React.FC<Props> = ({
   required,
   id,
   textField: { value, error },
-  fn
+  fn,
+  type
 }) => {
   const textfieldRef = useRef<HTMLInputElement>(null)
 
@@ -46,6 +48,7 @@ const TextField: React.FC<Props> = ({
           placeholder={placeholder}
           required={required}
           value={value}
+          type={type}
           onChange={fn}
           ref={textfieldRef}
         />

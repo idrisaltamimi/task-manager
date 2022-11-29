@@ -1,10 +1,10 @@
 import React from 'react'
 
-import './button.css'
+import './styles/button.css'
 
 interface Props {
-  text: string
-  theme: string
+  text: any
+  theme?: string
   size: string
   fn?: () => void
 }

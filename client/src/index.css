@@ -9,10 +9,12 @@
 :root {
   --clr-variant: #635FC7;
   --clr-variantHover: #A8A4FF;
+  --clr-variantHover2: rgba(99, 95, 199, .1);
   --clr-red: #EA5555;
   --clr-redHover: #FF9898;
   --clr-text: #000112;
   --clr-button: #fff;
+  --clr-line: #E4EBFA;
 
   --clr-secondaryBtn: rgba(99, 95, 199, 0.1);
   --clr-secondaryBtnHover: rgba(99, 95, 199, 0.25);
@@ -32,6 +34,7 @@
   --clr-bg: #20212C;
   --clr-modal: #2B2C37;
   --clr-text: #fff;
+  --clr-line: #3E3F4E;
 
   --clr-secondaryBtn: #fff;
   --clr-secondaryBtnHover: #fff;
@@ -44,6 +47,10 @@
 
 
 /* General styles */
+* {
+  transition: 200ms ease-in-out;
+}
+
 :focus {
   outline: 2px solid var(--clr-variant);
   outline-offset: 1px;
@@ -62,6 +69,7 @@
 
 body {
   background-color: var(--clr-bg);
+  overflow: hidden;
 }
 
 button,
@@ -79,9 +87,4 @@ a {
 h1,
 h2 {
   color: var(--clr-text);
-}
-
-.modal {
-  padding: 2em;
-  background-color: var(--clr-modal);
 }

@@ -8,7 +8,7 @@ button {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 99;
+  z-index: 89;
 }
 
 .form-control-select {
@@ -44,7 +44,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 101;
+  z-index: 91;
 }
 
 .select:hover {
@@ -69,7 +69,7 @@ button {
   flex-direction: column;
   align-items: flex-start;
   gap: 0px;
-  z-index: 100;
+  z-index: 90;
 }
 
 .option {

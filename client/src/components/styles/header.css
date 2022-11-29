@@ -1,0 +1,128 @@
+.header {
+  position: relative;
+  padding: 16px 0 16px 16px;
+  height: 64px;
+  background-color: var(--clr-modal);
+  display: flex;
+  align-items: center;
+  z-index: 100;
+}
+
+.subtitle {
+  margin-left: 16px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 23px;
+  color: var(--clr-text);
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rotate-arrow {
+  transform: rotate(180deg);
+}
+
+.add-task-container {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.add-task-container button:nth-last-child(2) {
+  display: none;
+}
+
+.edit-btn {
+  padding: 13px 16px;
+  background-color: transparent;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.edit-btn img {
+  align-self: flex-end;
+}
+
+.line {
+  display: none;
+}
+
+@media (min-width: 376px) {
+  .header {
+    padding: 21.39px 0 21.39px 24px;
+    height: 80px;
+    box-shadow: 0 1px 0 0 var(--clr-line);
+  }
+
+  .subtitle {
+    margin-left: 24px;
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .edit-btn {
+    padding: 13px 24px;
+  }
+}
+
+@media (min-width: 600px) {
+  .subtitle {
+    pointer-events: none;
+  }
+
+  .arrow-down,
+  .rotate-arrow {
+    display: none;
+  }
+
+  .add-task-container button:first-child {
+    display: none;
+  }
+
+  .add-task-container button:nth-last-child(2) {
+    display: block;
+  }
+
+  .line {
+    display: block;
+    width: 1px;
+    height: 80px;
+    background-color: var(--clr-line);
+    margin-left: 24.47px;
+  }
+}
+
+@media (min-width: 769px) {
+  .header {
+    padding: 24px 0 24px 24px;
+    height: 96px;
+  }
+
+  .subtitle {
+    margin-left: 32px;
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .line {
+    height: 96px;
+    margin-left: 32.47px;
+  }
+}
+
+.hide-overlay {
+  opacity: .5;
+  animation: out 200ms ease-out forwards;
+}
+
+@keyframes out {
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
