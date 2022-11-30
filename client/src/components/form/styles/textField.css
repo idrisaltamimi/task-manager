@@ -1,5 +1,4 @@
 .form-control-textfield {
-  margin: 2em;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -12,7 +11,7 @@
 .textfield-container {
   margin-top: 8px;
   position: relative;
-  max-width: 385px;
+  max-width: 416px;
   width: 100%;
   height: 40px;
   border-radius: 4px;
@@ -31,6 +30,8 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 23px;
+  color: var(--clr-text);
+  background-color: transparent;
   border: 0;
   border-radius: inherit;
 }

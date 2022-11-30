@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 
-import { chevronDown, addTaskMobile, verticalEllipsis } from '../assets'
-import { ThemeContext } from '../context/ThemeContext'
-import { Logo, Button } from './ui'
-import { Sidebar } from '../pages'
-import './styles/header.css'
+import { chevronDown, addTaskMobile, verticalEllipsis } from '../../assets'
+import { ThemeContext } from '../../context/ThemeContext'
+import { Logo, Button } from '../../components/ui'
+import { Sidebar } from '../Sidebar'
+import './header.css'
 
 interface Props {
 }

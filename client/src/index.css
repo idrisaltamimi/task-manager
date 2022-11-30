@@ -16,6 +16,9 @@
   --clr-button: #fff;
   --clr-line: #E4EBFA;
 
+  --clr-addButton: rgba(99, 95, 199, 0.1);
+  --clr-addButtonHover: rgba(99, 95, 199, 0.25);
+
   --clr-secondaryBtn: rgba(99, 95, 199, 0.1);
   --clr-secondaryBtnHover: rgba(99, 95, 199, 0.25);
 
@@ -43,6 +46,9 @@
 
   --clr-label: #fff;
   --clr-select: #20212C;
+
+  --clr-secondaryBtn: #fff;
+  --clr-secondaryBtnHover: #fff;
 }
 
 

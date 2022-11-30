@@ -14,6 +14,16 @@
   color: var(--clr-button);
 }
 
+.addButton {
+  background-color: var(--clr-secondaryBtn);
+  color: var(--clr-variant);
+}
+
+.addButton:hover {
+  background-color: var(--clr-secondaryBtnHover);
+  color: var(--clr-variant);
+}
+
 .main:hover {
   background-color: var(--clr-variantHover);
 }
@@ -55,4 +65,9 @@
   height: 38px;
   font-size: 13px;
   line-height: 12px;
+}
+
+.full-width {
+  width: 100%;
+  align-self: stretch;
 }

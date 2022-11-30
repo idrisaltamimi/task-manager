@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { check } from '../../assets'
 
 import './styles/checkBox.css'
 
@@ -17,14 +18,17 @@ const CheckBox: React.FC<Props> = ({ label, id, value }) => {
 
   return (
     <label htmlFor={id} className='form-control-checkbox'>
-      <input
-        id={id}
-        checked={checked}
-        className='checkbox-input'
-        type='checkbox'
-        value={value}
-        onChange={handleChange}
-      />
+      <div className='checkbox-input-container'>
+        <input
+          id={id}
+          checked={checked}
+          className='checkbox-input'
+          type='checkbox'
+          value={value}
+          onChange={handleChange}
+        />
+        <img src={check} alt='' className='check' />
+      </div>
       <span className='label-text'>{label}</span>
     </label>
   )

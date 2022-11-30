@@ -41,11 +41,10 @@
   background-color: #fff;
   margin: 0;
 
+  aspect-ratio: 1 / 1;
   width: 16px;
   height: 16px;
-  border: 1px solid rgba(130, 143, 163, 0.248914);
   border-radius: 2px;
-  transform: translateY(-0.075em);
 
   display: grid;
   place-content: center;
@@ -55,16 +54,15 @@
   background-color: var(--clr-variant);
 }
 
-.checkbox-input::before {
-  content: '';
-  width: 0.65em;
-  height: 0.65em;
-
-  transform-origin: bottom left;
+.checkbox-input-container {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  height: 16px;
 }
 
-.checkbox-input:checked::before {
-  background-color: CanvasText;
-  box-shadow: inset 1em 1em #fff;
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+.check {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

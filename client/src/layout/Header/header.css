@@ -117,7 +117,7 @@
 
 .hide-overlay {
   opacity: .5;
-  animation: out 200ms ease-out forwards;
+  animation: out 450ms ease-out forwards;
 }
 
 @keyframes out {

@@ -1,6 +1,7 @@
 
-import React from 'react'
+import React, { useContext } from 'react'
 import ReactDOM from 'react-dom'
+import { PortalContext } from '../../context/PortalContext'
 
 import './styles/modal.css'
 
@@ -9,14 +10,15 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = ({ children }) => {
+  const { closeModal } = useContext(PortalContext)
   const overlayRootEl = document.getElementById('portal')
 
   return (
     overlayRootEl ?
       (ReactDOM.createPortal(
         <>
-          <div className={`overlay`} />
-          <div className='model'>
+          <div className={`modal-overlay`} onClick={closeModal} />
+          <div className='modal'>
             {children}
           </div>
         </>,

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 
-import { PortalContext } from '../context/PortalContext'
-import { AddBoard } from './form'
+import { PortalContext } from '../../context/PortalContext'
+import { AddBoard } from './'
 import './styles/home.css'
 
-const Home = () => {
+const Main = () => {
   const { boardModal } = useContext(PortalContext)
 
   return (
@@ -14,4 +14,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Main

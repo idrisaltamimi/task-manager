@@ -6,9 +6,10 @@ const PortalContextProvider = ({ children }) => {
   const [boardModal, setBoardModal] = useState(false)
 
   const addBoardModal = () => setBoardModal(true)
+  const closeModal = () => setBoardModal(false)
 
   return (
-    <PortalContext.Provider value={{ boardModal, addBoardModal }}>
+    <PortalContext.Provider value={{ boardModal, addBoardModal, closeModal }}>
       {children}
     </PortalContext.Provider>
   )

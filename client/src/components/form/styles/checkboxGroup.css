@@ -1,0 +1,11 @@
+.checkbox-group-control {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

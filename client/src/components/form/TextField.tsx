@@ -8,7 +8,7 @@ interface textField {
 }
 
 interface Props {
-  label: string
+  label?: string
   placeholder?: string
   required: boolean
   id: string
@@ -40,7 +40,7 @@ const TextField: React.FC<Props> = ({
 
   return (
     <div className='form-control-textfield'>
-      <label className='label' htmlFor={id}>{label}</label>
+      {label !== '' && <label className='label' htmlFor={id}>{label}</label>}
       <div className={`${invalidClassName}`}>
         <input
           id={id}

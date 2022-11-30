@@ -20,7 +20,9 @@ const ActionsContextProvider = ({ children }) => {
   const createBoard = async (newBoard) => {
     const { data } = await api.postBoard(newBoard)
     try {
-      return data
+
+      if (data) return getBoards()
+
     } catch (error) {
       console.log(error)
     }

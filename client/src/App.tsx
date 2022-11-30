@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 
-import Home from './pages/Home'
-import { Header } from './components'
+import { Header } from './layout/Header'
 import { ThemeContext } from './context/ThemeContext'
 import { showSidebarIcon } from './assets'
+import { Main } from './layout/Main'
 import './app.css'
 
 export default function App() {
@@ -14,7 +14,7 @@ export default function App() {
   return (
     <div className={sidebarControlClassName}>
       <Header />
-      <Home />
+      <Main />
       <button className='show-sidebar-btn' onClick={toggleMenu}>
         <img src={showSidebarIcon} alt='' />
       </button>

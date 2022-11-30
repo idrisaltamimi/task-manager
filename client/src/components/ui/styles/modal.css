@@ -1,4 +1,4 @@
-.overlay {
+.modal-overlay {
   position: fixed;
   top: 0;
   right: 0;
@@ -8,13 +8,47 @@
   z-index: 1000;
 }
 
-.model {
+.modal {
   position: absolute;
-  max-width: 480px;
-  width: 100%;
+  max-width: 343px;
+  max-height: calc(100% - 32px);
+  width: calc(100% - 32px);
+  height: auto;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  padding: 24px;
   background-color: var(--clr-modal);
+  border-radius: 6px;
   z-index: 1000;
+  opacity: 0;
+  animation: show-modal 200ms ease-in-out forwards;
+
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
+
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes show-modal {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 376px) {
+  .modal {
+    padding: 32px;
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 769px) {
+  .modal {
+    max-width: 480px;
+  }
 }

@@ -13,9 +13,9 @@ export const fetchBoards = async (req, res) => {
 }
 
 export const getBoard = async (req, res) => {
-  const { newBoard } = req.body
+  const { name } = req.body
 
-  const newTask = new Boards({ name: newBoard })
+  const newTask = new Boards({ name })
   try {
     await newTask.save()
 

@@ -1,0 +1,28 @@
+.form-control-textarea {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-control-textarea label {
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.textarea-container {
+  width: 100%;
+  height: 112px;
+  border-radius: 4px;
+}
+
+.textarea {
+  resize: none;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
+
+.textarea::-webkit-scrollbar {
+  display: none;
+}

@@ -39,7 +39,7 @@ const Select: React.FC<Props> = ({ defaultValue, options, label }) => {
         <label className='label'>{label}</label>
 
         <div className='select-container'>
-          <button className={`select ${selectClassName}`} onClick={openMenu}>
+          <button className={`select ${selectClassName}`} onClick={openMenu} type='button'>
             {current || defaultValue} <img src={chevronDown} alt='' />
           </button>
 
@@ -51,6 +51,7 @@ const Select: React.FC<Props> = ({ defaultValue, options, label }) => {
                   ref={index === 0 ? optionRef : null}
                   className='option'
                   onClick={() => handleClick(option)}
+                  type='button'
                 >
                   {option}
                 </button>
@@ -59,7 +60,7 @@ const Select: React.FC<Props> = ({ defaultValue, options, label }) => {
         </div>
       </div>
 
-      {menu && <div className='overlay' onClick={toggleMenu} />}
+      {menu && <div className='select-overlay' onClick={toggleMenu} />}
     </>
   )
 }
