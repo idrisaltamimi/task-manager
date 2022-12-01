@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+
 import { cross } from '../../assets'
+import { PortalContext } from '../../context'
 import TextField from './TextField'
 
-const ListTextField = () => {
+interface Props {
+  id: string
+}
+
+const ListTextField: React.FC<Props> = ({ id }) => {
+  const { getId } = useContext(PortalContext)
+  const [text, setText] = useState('')
+
   return (
     <div className='group-item'>
       <TextField
@@ -10,10 +19,10 @@ const ListTextField = () => {
         required={false}
         placeholder='e.g. Web Design'
         id='board-name'
-        textField={{ value: 'name', error: false }}
-      // fn={(e) => setName(e.target.value)}
+        textField={{ value: text, error: false }}
+        fn={(e) => setText(e.target.value)}
       />
-      <button><img src={cross} alt='' /></button>
+      <button type='button' onClick={() => getId(id)}><img src={cross} alt='' /></button>
     </div>
   )
 }

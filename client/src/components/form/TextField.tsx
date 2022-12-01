@@ -51,6 +51,8 @@ const TextField: React.FC<Props> = ({
           type={type}
           onChange={fn}
           ref={textfieldRef}
+          autoFocus
+          autoComplete='off'
         />
       </div>
     </div>

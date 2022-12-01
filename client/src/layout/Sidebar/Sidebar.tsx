@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import uuid from 'react-uuid'
 
-import { ActionsContext } from '../../actions/actionsContext'
+import { ActionsContext } from '../../actions'
 import { board, darkTheme, lightTheme, hideSidebar } from '../../assets'
-import { PortalContext } from '../../context/PortalContext'
-import { ThemeContext } from '../../context/ThemeContext'
+import { PortalContext, ThemeContext } from '../../context'
 import './styles/sidebar.css'
 
 interface Props {
@@ -13,20 +12,19 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ sidebarClassName }) => {
   const { mode, toggleMode, toggleMenu, hideMenu } = useContext(ThemeContext)
-  const { boards, getBoards, createBoard } = useContext(ActionsContext)
+  const { boards, getBoards } = useContext(ActionsContext)
   const { addBoardModal } = useContext(PortalContext)
 
   const [currentBoard, setCurrentBoard] = useState('')
 
   useEffect(() => {
     getBoards()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const addBoard = async () => {
     addBoardModal()
     hideMenu()
-    // await createBoard({ newBoard: 'third board' })
-    // getBoards()
   }
 
   const currentClassName = (id: string) => currentBoard === id ? 'current' : ''
@@ -50,7 +48,6 @@ const Sidebar: React.FC<Props> = ({ sidebarClassName }) => {
           </button>
         )
         )}
-
         <button className='board' onClick={addBoard}>
           <img src={board} alt='' className='board-logo' />
           + Create New Board

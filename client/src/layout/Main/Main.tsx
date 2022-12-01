@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 
-import { PortalContext } from '../../context/PortalContext'
+import { PortalContext } from '../../context'
 import { AddBoard } from './'
 import './styles/home.css'
 

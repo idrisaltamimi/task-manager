@@ -1,10 +1,20 @@
-import React, { createContext, useEffect, useState } from 'react'
+import { createContext, ReactElement, useEffect, useState } from 'react'
 
 import { logoDark, logoLight } from '../assets'
 
-const ThemeContext = createContext()
+interface ThemeContextType {
+  currentLogo: string
+  toggleMode: () => void
+  mode: boolean
+  showSidebar: boolean
+  setShowSidebar: React.SetStateAction<boolean>
+  hideMenu: () => void
+  toggleMenu: () => void
+}
 
-const ThemeContextProvider = ({ children }) => {
+const ThemeContext = createContext<ThemeContextType | any>(null)
+
+const ThemeContextProvider = ({ children }: { children: ReactElement }) => {
   const [showSidebar, setShowSidebar] = useState(false)
 
   const localStorageMode = localStorage.getItem('mode') === 'false' ? false : true

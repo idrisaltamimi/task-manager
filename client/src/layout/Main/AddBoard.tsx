@@ -12,6 +12,7 @@ const AddBoard = () => {
         action={CREATE_BOARD}
         title='Add New Board'
         textInput={{ id: 'new-board', label: 'Board Name', placeholder: 'e.g. Web Design' }}
+        inputArray={{ label: 'Columns', buttonLabel: '+ Add New Column' }}
         submit='Create New Board'
       />
     </Modal>

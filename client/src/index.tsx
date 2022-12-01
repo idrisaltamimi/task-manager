@@ -2,9 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import App from './App'
-import { ActionsContextProvider } from './actions/actionsContext'
-import { ThemeContextProvider } from './context/ThemeContext'
-import { PortalContextProvider } from './context/PortalContext'
+import { ActionsContextProvider } from './actions'
+import { ThemeContextProvider, PortalContextProvider } from './context'
 import './index.css'
 
 const root = createRoot(

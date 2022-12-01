@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
 import { chevronDown, addTaskMobile, verticalEllipsis } from '../../assets'
-import { ThemeContext } from '../../context/ThemeContext'
+import { ThemeContext } from '../../context'
 import { Logo, Button } from '../../components/ui'
 import { Sidebar } from '../Sidebar'
 import './header.css'

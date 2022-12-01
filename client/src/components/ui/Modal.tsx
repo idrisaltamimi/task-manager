@@ -1,7 +1,7 @@
 
 import React, { useContext } from 'react'
 import ReactDOM from 'react-dom'
-import { PortalContext } from '../../context/PortalContext'
+import { PortalContext } from '../../context'
 
 import './styles/modal.css'
 

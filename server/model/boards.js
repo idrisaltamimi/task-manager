@@ -1,15 +1,29 @@
 import mongoose from 'mongoose'
 
-const columns = {
+const subtask = {
+  id: String,
+  title: String,
+  isCompleted: Boolean
+}
+
+const task = {
+  id: String,
+  title: String,
+  description: String,
+  status: String,
+  subtasks: [subtask]
+}
+
+const column = {
   id: String,
   name: String,
-  subtasks: [{ task: String, id: String }]
+  tasks: [task]
 }
 
 const boardsSchema = mongoose.Schema({
   id: String,
   name: String,
-  columns: [columns]
+  columns: [column]
 })
 
 const Boards = mongoose.model('Boards', boardsSchema)

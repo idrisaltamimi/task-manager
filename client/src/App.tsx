@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 
 import { Header } from './layout/Header'
-import { ThemeContext } from './context/ThemeContext'
+import { ThemeContext } from './context'
 import { showSidebarIcon } from './assets'
 import { Main } from './layout/Main'
 import './app.css'

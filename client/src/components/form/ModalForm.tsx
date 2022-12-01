@@ -1,12 +1,11 @@
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 
-import { CheckboxGroup, ListTextField, Select, TextArea, TextField } from './'
+import { CheckboxGroup, Select, TextArea, TextField } from './'
 import { Button } from '../ui'
-
-import './styles/modalForm.css'
-import { ActionsContext } from '../../actions/actionsContext'
-import { PortalContext } from '../../context/PortalContext'
+import { ActionsContext } from '../../actions'
+import { PortalContext } from '../../context'
 import { CREATE_BOARD } from '../../constants'
+import './styles/modalForm.css'
 
 interface Props {
   title: string
@@ -15,6 +14,7 @@ interface Props {
   textArea?: { id: string, label: string, placeholder: string }
   select?: { defaultValue: string, label: string, options: Array<string> }
   checkbox?: { label: string, checkBoxes: Array<string> }
+  inputArray?: { label: string, buttonLabel: string, }
   submit: string
   action: string
 }
@@ -27,14 +27,16 @@ const ModalForm: React.FC<Props> = ({
   textArea,
   select,
   checkbox,
-  action
+  action,
+  inputArray
 }) => {
   const { createBoard } = useContext(ActionsContext)
-  const { closeModal } = useContext(PortalContext)
+  const { closeModal, addColumnInput, inputList } = useContext(PortalContext)
 
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState(false)
   const [description, setDescription] = useState('')
+  const [inputListValue, setInputListValue] = useState([])
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -84,19 +86,20 @@ const ModalForm: React.FC<Props> = ({
         fn={(e) => setDescription(e.target.value)}
       />}
 
-      {/* <div className='add-columns-container'>
-        <label className='label'>Board Columns</label>
+      {inputArray && <div className='add-columns-container'>
+        <label className='label'>{inputArray.label}</label>
         <div className='group-items'>
-          <ListTextField />
+          {inputList.map(({ item }: { item: SVGRectElement }) => item)}
           <Button
-            text='+ Add New Column'
+            text={inputArray.buttonLabel}
             size='small'
             theme='addButton'
             fullWidth={true}
             type='button'
+            fn={addColumnInput}
           />
         </div>
-      </div> */}
+      </div>}
 
       {select && <Select
         defaultValue={select.defaultValue}

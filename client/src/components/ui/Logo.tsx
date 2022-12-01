@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
 import { logoMobile } from '../../assets'
-import { ThemeContext } from '../../context/ThemeContext'
+import { ThemeContext } from '../../context'
 
 const Logo = () => {
   const { currentLogo } = useContext(ThemeContext)
