@@ -20,7 +20,7 @@ const column = {
   tasks: [task]
 }
 
-const boardsSchema = mongoose.Schema({
+const boardsSchema = new mongoose.Schema({
   id: String,
   name: String,
   columns: [column]
