@@ -1,10 +1,11 @@
 import express from 'express'
 
-import { getBoard, fetchBoards } from '../controllers/boards.js'
+import { createBoard, fetchBoards, updateBoard } from '../controllers/boards.js'
 
 const router = express.Router()
 
 router.get('/', fetchBoards)
-router.post('/post', getBoard)
+router.post('/post', createBoard)
+router.patch('/:id', updateBoard)
 
 export default router

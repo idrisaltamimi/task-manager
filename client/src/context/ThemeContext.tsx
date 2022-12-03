@@ -2,17 +2,16 @@ import { createContext, ReactElement, useEffect, useState } from 'react'
 
 import { logoDark, logoLight } from '../assets'
 
-interface ThemeContextType {
+export interface ThemeContextType {
   currentLogo: string
   toggleMode: () => void
   mode: boolean
   showSidebar: boolean
-  setShowSidebar: React.SetStateAction<boolean>
   hideMenu: () => void
   toggleMenu: () => void
 }
 
-const ThemeContext = createContext<ThemeContextType | any>(null)
+const ThemeContext = createContext<ThemeContextType | null>(null)
 
 const ThemeContextProvider = ({ children }: { children: ReactElement }) => {
   const [showSidebar, setShowSidebar] = useState(false)
@@ -44,7 +43,6 @@ const ThemeContextProvider = ({ children }: { children: ReactElement }) => {
       toggleMode,
       mode: toggleDarkMode,
       showSidebar,
-      setShowSidebar,
       hideMenu,
       toggleMenu
     }}>

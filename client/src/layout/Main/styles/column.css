@@ -1,0 +1,30 @@
+.column {
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.column-name {
+  color: #828FA3;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 2.4px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.column-color-circle {
+  aspect-ratio: 1 / 1;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+@media (min-width: 376px) {}
+
+@media (min-width: 769px) {}

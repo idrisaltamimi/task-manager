@@ -65,10 +65,12 @@
   }
 
   .show-sidebar main {
+    width: calc(100% - 260px);
     transform: translateX(261px);
   }
 
   .hide-sidebar main {
+    width: 100%;
     transform: translateX(0);
   }
 
@@ -94,6 +96,7 @@
   }
 
   .show-sidebar main {
+    width: calc(100% - 300px);
     transform: translateX(301px);
   }
 

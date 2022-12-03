@@ -47,6 +47,7 @@
 }
 
 .large {
+  border-radius: 24px;
   height: 48px;
   padding: 15px 18px 16px 17px;
   font-size: 15px;

@@ -30,6 +30,8 @@
   --clr-modal: #fff;
   --clr-select: #fff;
 
+  --clr-emptyColumn: 180deg, #E9EFFA 0%, rgba(233, 239, 250, 0.5) 100%;
+
   --ff-primary: 'Plus Jakarta Sans', sans-serif;
 }
 
@@ -49,8 +51,10 @@
 
   --clr-secondaryBtn: #fff;
   --clr-secondaryBtnHover: #fff;
-}
 
+  --clr-variantHover2: #fff;
+  --clr-emptyColumn: 180deg, rgba(43, 44, 55, 0.25) 0%, rgba(43, 44, 55, 0.125) 100%;
+}
 
 /* General styles */
 * {
@@ -93,4 +97,26 @@ a {
 h1,
 h2 {
   color: var(--clr-text);
+}
+
+main {
+  height: calc(100vh - 64px);
+  /* overflow-x: scroll; */
+}
+
+@media (min-width: 376px) {
+  main {
+    height: calc(100vh - 80px);
+  }
+}
+
+@media (min-width: 769px) {
+  main {
+    height: calc(100vh - 96px);
+  }
+}
+
+button:disabled {
+  opacity: 0.25;
+  pointer-events: none;
 }

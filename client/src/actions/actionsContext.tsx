@@ -3,29 +3,46 @@ import { createContext, ReactElement, useState } from 'react'
 import * as api from '../api'
 import { BoardType } from '../constants'
 
-interface ActionsContextType {
-  boards: Array<BoardType>
+export interface ActionsContextType {
   getBoards: () => void
   createBoard: (newBoard: BoardType) => void
+  updateBoard: (updatedBoard: BoardType) => void
+  boards: BoardType[]
+  currentBoard: BoardType
+  currentBoardId: string
+  getCurrentBoardId: (boardId: string) => void
+  isLoading: boolean
 }
 
-const ActionsContext = createContext<ActionsContextType | any>(null)
+const ActionsContext = createContext<ActionsContextType | null>(null)
 
 const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
   const [boards, setBoards] = useState([])
+  const [currentBoardId, setCurrentBoardId] = useState('')
+  const [currentBoard, setCurrentBoard] = useState<any>({ name: '', _id: '', createdAt: '', columns: [] })
+  const [isLoading, setIsLoading] = useState(true)
+
+  const getCurrentBoardId = (boardId: string) => {
+    setCurrentBoardId(boardId)
+    setCurrentBoard(boards.find(({ _id }) => _id === boardId))
+  }
 
   const getBoards = async () => {
+    setIsLoading(true)
     const { data } = await api.fetchBoards()
 
     try {
       setBoards(data)
+      setCurrentBoardId(data[0]._id)
+      setCurrentBoard(data[0])
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
     }
   }
 
   const createBoard = async (newBoard: BoardType) => {
-    const { data } = await api.postBoard(newBoard)
+    const { data } = await api.createBoard(newBoard)
     try {
 
       if (data) return getBoards()
@@ -35,11 +52,28 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     }
   }
 
+  const updateBoard = async (updatedBoard: BoardType) => {
+    console.log(currentBoardId, updatedBoard)
+    const { data } = await api.updateBoard(currentBoardId, updatedBoard)
+    try {
+
+      if (data) return getBoards()
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  console.log(currentBoard)
   return (
     <ActionsContext.Provider value={{
-      boards,
       getBoards,
-      createBoard
+      createBoard,
+      updateBoard,
+      boards,
+      currentBoard,
+      currentBoardId,
+      getCurrentBoardId,
+      isLoading
     }}>
       {children}
     </ActionsContext.Provider>

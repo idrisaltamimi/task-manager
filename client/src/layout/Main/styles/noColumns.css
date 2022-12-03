@@ -1,0 +1,26 @@
+.no-columns-container {
+  width: 100%;
+  padding: 0 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 25px;
+}
+
+.no-columns-overline {
+  color: #828FA3;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 23px;
+  text-align: center;
+}
+
+@media (min-width: 376px) {
+  .no-columns-container {
+    margin: 0 24px;
+  }
+}

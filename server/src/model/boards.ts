@@ -23,7 +23,11 @@ const column = {
 const boardsSchema = new mongoose.Schema({
   id: String,
   name: String,
-  columns: [column]
+  columns: [column],
+  createdAt: {
+    type: Date,
+    default: new Date()
+  },
 })
 
 const Boards = mongoose.model('Boards', boardsSchema)

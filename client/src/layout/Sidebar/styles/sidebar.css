@@ -10,14 +10,25 @@
 
 @media (max-width:599px) {
   .sidebar {
-    overflow: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
     overflow-y: scroll;
+    scrollbar-color: var(--clr-label) var(--clr-modal);
+    scrollbar-width: thin;
   }
 
   .sidebar::-webkit-scrollbar {
-    display: none;
+    width: 8px;
+  }
+
+  .sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--clr-label);
+    border: 3px solid var(--clr-modal);
+    border-radius: 12px;
+  }
+
+  .sidebar::-webkit-scrollbar-track {
+    border-radius: 20px;
+
+    background-color: var(--clr-modal);
   }
 }
 
@@ -73,6 +84,7 @@
 .current:hover {
   color: #fff;
   background-color: var(--clr-variant);
+  pointer-events: none;
 }
 
 .current .board-logo,
@@ -200,14 +212,23 @@
 
 @media (min-width: 600px) {
   .buttons-container {
-    overflow: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
     overflow-y: scroll;
+    scrollbar-color: var(--clr-label) var(--clr-modal);
+    scrollbar-width: thin;
   }
 
   .buttons-container::-webkit-scrollbar {
-    display: none;
+    width: 8px;
+  }
+
+  .buttons-container::-webkit-scrollbar-thumb {
+    background-color: var(--clr-label);
+    border: 3px solid var(--clr-modal);
+    border-radius: 12px;
+  }
+
+  .buttons-container::-webkit-scrollbar-track {
+    background-color: var(--clr-modal);
   }
 
   .overlay {

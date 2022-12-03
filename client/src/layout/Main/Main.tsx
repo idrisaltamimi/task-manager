@@ -1,15 +1,38 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
-import { PortalContext } from '../../context'
-import { AddBoard } from './'
-import './styles/home.css'
+import { ActionsContext, ActionsContextType } from '../../actions'
+import { NoColumns, Column, DashboardLoading } from './'
+import './styles/main.css'
 
 const Main = () => {
-  const { boardModal } = useContext(PortalContext)
+  const { getBoards, currentBoard, isLoading } = useContext(ActionsContext) as ActionsContextType
+
+  useEffect(() => {
+    getBoards()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const mainClassName = currentBoard.columns.length === 0 ? 'no-columns' : 'columns'
+
+  if (isLoading) return <DashboardLoading />
 
   return (
-    <main>
-      {boardModal && <AddBoard />}
+    <main className={mainClassName}>
+      {currentBoard.columns.length === 0 ? (
+        <NoColumns />
+      ) : (
+        <>
+          {currentBoard.columns.map((column) => (
+            <Column
+              key={column._id}
+              column={column}
+            />
+          ))}
+          <button className='column add-new-column'>
+            + New Column
+          </button>
+        </>
+      )}
     </main>
   )
 }

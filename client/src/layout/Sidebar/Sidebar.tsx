@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import uuid from 'react-uuid'
 
-import { ActionsContext } from '../../actions'
+import { ActionsContext, ActionsContextType } from '../../actions'
 import { board, darkTheme, lightTheme, hideSidebar } from '../../assets'
-import { PortalContext, ThemeContext } from '../../context'
+import { PortalContext, PortalContextType, ThemeContext, ThemeContextType } from '../../context'
+import { getId } from '../../utils'
 import './styles/sidebar.css'
 
 interface Props {
@@ -11,37 +12,34 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ sidebarClassName }) => {
-  const { mode, toggleMode, toggleMenu, hideMenu } = useContext(ThemeContext)
-  const { boards, getBoards } = useContext(ActionsContext)
-  const { addBoardModal } = useContext(PortalContext)
+  const { mode, toggleMode, toggleMenu, hideMenu } = useContext(ThemeContext) as ThemeContextType
+  const { boards, currentBoardId, getCurrentBoardId } = useContext(ActionsContext) as ActionsContextType
+  const { addBoardModal } = useContext(PortalContext) as PortalContextType
 
-  const [currentBoard, setCurrentBoard] = useState('')
+  const currentClassName = (id: string) => currentBoardId === id ? 'current' : ''
 
-  useEffect(() => {
-    getBoards()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const togglerClassName = mode ? 'dark' : ''
 
-  const addBoard = async () => {
+  const addBoard = () => {
     addBoardModal()
     hideMenu()
   }
 
-  const currentClassName = (id: string) => currentBoard === id ? 'current' : ''
-  const current = (index: number) => (currentBoard === '' && index === 0) ? 'current' : ''
-
-  const togglerClassName = mode ? 'dark' : ''
+  const changeId = (id: string) => {
+    getCurrentBoardId(id)
+    hideMenu()
+  }
 
   return (
     <div className={`${sidebarClassName}`}>
       <label className='label sidebar-label'>ALL BOARDS ({boards.length})</label>
 
       <div className='buttons-container'>
-        {boards.length > 0 && boards.map(({ name, _id }: { name: string, _id: string }, index: number) => (
+        {boards.length > 0 && boards.map(({ name, _id }) => (
           <button
             key={uuid()}
-            className={`board ${current(index)} ${currentClassName(_id)}`}
-            onClick={() => setCurrentBoard(_id)}
+            className={`board ${currentClassName(getId(_id))}`}
+            onClick={() => changeId(getId(_id))}
           >
             <img src={board} alt='' className='board-logo' />
             {name}

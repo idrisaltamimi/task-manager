@@ -7,15 +7,18 @@ export interface TaskType {
   title: string,
   description: string,
   status: string,
-  subtasks?: [SubTaskType]
+  subtasks?: SubTaskType[]
 }
 
 export interface ColumnType {
+  _id?: string,
   name: string,
-  tasks?: [TaskType]
+  tasks?: TaskType[]
 }
 
 export interface BoardType {
-  name: string,
-  columns?: [ColumnType]
+  createdAt?: string,
+  _id?: string
+  name: string
+  columns: ColumnType[]
 }

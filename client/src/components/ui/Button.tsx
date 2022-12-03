@@ -8,10 +8,11 @@ interface Props {
   theme?: string
   size: string
   fullWidth?: boolean
+  disable?: boolean
   fn?: () => void
 }
 
-const Button: React.FC<Props> = ({ text, theme, fn, size, fullWidth, type }) => {
+const Button: React.FC<Props> = ({ text, theme, fn, size, fullWidth, type, disable }) => {
   const fullWidthClassName = fullWidth ? 'full-width' : ''
   const buttonType = type === 'button' ? 'button' : 'submit'
   return (
@@ -19,6 +20,7 @@ const Button: React.FC<Props> = ({ text, theme, fn, size, fullWidth, type }) => 
       className={`btn ${theme} ${size} ${fullWidthClassName}`}
       onClick={fn}
       type={buttonType}
+      disabled={disable}
     >
       {text}
     </button>

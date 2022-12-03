@@ -1,11 +1,20 @@
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
+import uuid from 'react-uuid'
 
 import { CheckboxGroup, Select, TextArea, TextField } from './'
 import { Button } from '../ui'
-import { ActionsContext } from '../../actions'
-import { PortalContext } from '../../context'
-import { CREATE_BOARD } from '../../constants'
+import { ActionsContext, ActionsContextType } from '../../actions'
+import { PortalContext, PortalContextType } from '../../context'
+import { CREATE_BOARD, UPDATE_BOARD } from '../../constants'
 import './styles/modalForm.css'
+import { cross } from '../../assets'
+import { getId } from '../../utils'
+
+interface inputListType {
+  name: string
+  id: string
+  error: boolean
+}
 
 interface Props {
   title: string
@@ -30,29 +39,29 @@ const ModalForm: React.FC<Props> = ({
   action,
   inputArray
 }) => {
-  const { createBoard } = useContext(ActionsContext)
-  const { closeModal, addColumnInput, inputList } = useContext(PortalContext)
+  const { createBoard, currentBoard, updateBoard } = useContext(ActionsContext) as ActionsContextType
+  const { closeModal, updateModal } = useContext(PortalContext) as PortalContextType
 
-  const [name, setName] = useState('')
+  const [name, setName] = useState(updateModal ? currentBoard.name : '')
   const [nameError, setNameError] = useState(false)
   const [description, setDescription] = useState('')
-  const [inputListValue, setInputListValue] = useState([])
 
-  const onSubmit = async (e: FormEvent) => {
-    e.preventDefault()
+  const inputListObject = { name: '', id: uuid(), error: false }
+  const newColumn = currentBoard.columns.map(({ name, _id }) => ({ name, id: getId(_id), error: false }))
+  const currentInputListObject = (updateModal && currentBoard.columns.length > 0) ? newColumn : [inputListObject]
+  const [inputList, setInputList] = useState<inputListType[]>(currentInputListObject)
 
-    if (name === '') return setNameError(true)
 
-    switch (action) {
-      case CREATE_BOARD:
-        await createBoard({ name: name })
-        break
+  const addColumnInput = () => {
+    const id = uuid()
+    setInputList(prev => [
+      ...prev,
+      { name: '', id, error: false }
+    ])
+  }
 
-      default:
-        break
-    }
-
-    closeModal()
+  const removeInput = (id: string) => {
+    setInputList(prev => prev.filter(i => i.id !== id))
   }
 
   const textfieldChange = (e: ChangeEvent) => {
@@ -60,6 +69,49 @@ const ModalForm: React.FC<Props> = ({
     setName(target.value)
 
     if (name !== '') setNameError(false)
+  }
+
+  const inputListChange = (e: ChangeEvent, id: string) => {
+    const target = e.target as HTMLInputElement
+
+    const index = inputList.findIndex((object: { name: string, id: string }) => {
+      return object.id === id
+    })
+
+    setInputList(prev => {
+      const newArray = prev.slice()
+      newArray[index].name = target.value
+      newArray[index].error = target.value !== '' && false
+
+      return newArray
+    })
+  }
+
+  const onSubmit = async (e: FormEvent) => {
+    e.preventDefault()
+
+    if (name === '') return setNameError(true)
+
+    if (!inputList.every(item => item.name !== '')) {
+      return setInputList(prev => {
+        return prev.map(item => item.name === '' ? { ...item, error: true } : item)
+      })
+    }
+
+    const inputColumnsArray = inputList.map(({ name }) => ({ name }))
+
+    switch (action) {
+      case CREATE_BOARD:
+        await createBoard({ name, columns: inputColumnsArray })
+        break
+      case UPDATE_BOARD:
+        return updateBoard({ name, columns: inputColumnsArray })
+
+      default:
+        break
+    }
+
+    closeModal()
   }
 
   return (
@@ -89,7 +141,21 @@ const ModalForm: React.FC<Props> = ({
       {inputArray && <div className='add-columns-container'>
         <label className='label'>{inputArray.label}</label>
         <div className='group-items'>
-          {inputList.map(({ item }: { item: SVGRectElement }) => item)}
+          {inputList.map(({ name, id, error }: { name: string, id: string, error: boolean }) => (
+            <div key={id} className='group-item'>
+              <TextField
+                type='text'
+                required={false}
+                placeholder=''
+                id={id}
+                textField={{ value: name, error: error }}
+                fn={(e: ChangeEvent) => inputListChange(e, id)}
+              />
+              <button type='button' onClick={() => removeInput(id)}>
+                <img src={cross} alt='' />
+              </button>
+            </div>
+          ))}
           <Button
             text={inputArray.buttonLabel}
             size='small'
