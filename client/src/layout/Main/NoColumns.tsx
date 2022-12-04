@@ -6,12 +6,7 @@ import { Button } from '../../components/ui'
 import './styles/noColumns.css'
 
 const NoColumns = () => {
-  const { addBoardModal, updateBoardModal } = useContext(PortalContext) as PortalContextType
-
-  const addColumn = async () => {
-    addBoardModal()
-    updateBoardModal()
-  }
+  const { addColumn } = useContext(PortalContext) as PortalContextType
 
   return (
     <div className='no-columns-container'>

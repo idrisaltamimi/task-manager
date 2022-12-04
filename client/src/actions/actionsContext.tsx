@@ -7,6 +7,7 @@ export interface ActionsContextType {
   getBoards: () => void
   createBoard: (newBoard: BoardType) => void
   updateBoard: (updatedBoard: BoardType) => void
+  deleteBoard: () => void
   boards: BoardType[]
   currentBoard: BoardType
   currentBoardId: string
@@ -36,16 +37,16 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
       setCurrentBoardId(data[0]._id)
       setCurrentBoard(data[0])
       setIsLoading(false)
+
     } catch (error) {
       console.log(error)
     }
   }
 
   const createBoard = async (newBoard: BoardType) => {
-    const { data } = await api.createBoard(newBoard)
     try {
-
-      if (data) return getBoards()
+      await api.createBoard(newBoard)
+      getBoards()
 
     } catch (error) {
       console.log(error)
@@ -53,22 +54,31 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
   }
 
   const updateBoard = async (updatedBoard: BoardType) => {
-    console.log(currentBoardId, updatedBoard)
-    const { data } = await api.updateBoard(currentBoardId, updatedBoard)
     try {
-
-      if (data) return getBoards()
+      await api.updateBoard(currentBoardId, updatedBoard)
+      getBoards()
 
     } catch (error) {
       console.log(error)
     }
   }
-  console.log(currentBoard)
+
+  const deleteBoard = async () => {
+    try {
+      await api.deleteBoard(currentBoardId)
+      getBoards()
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <ActionsContext.Provider value={{
       getBoards,
       createBoard,
       updateBoard,
+      deleteBoard,
       boards,
       currentBoard,
       currentBoardId,

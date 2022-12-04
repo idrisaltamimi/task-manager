@@ -4,8 +4,8 @@ export interface PortalContextType {
   boardModal: boolean
   updateModal: boolean
   addBoardModal: () => void
-  updateBoardModal: () => void
   closeModal: () => void
+  addColumn: () => void
 }
 
 interface Props {
@@ -20,15 +20,23 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
 
   const addBoardModal = () => setBoardModal(true)
   const updateBoardModal = () => setUpdateModal(true)
-  const closeModal = () => setBoardModal(false)
+  const closeModal = () => {
+    setBoardModal(false)
+    setUpdateModal(false)
+  }
+
+  const addColumn = () => {
+    addBoardModal()
+    updateBoardModal()
+  }
 
   return (
     <PortalContext.Provider value={{
       boardModal,
       updateModal,
       addBoardModal,
-      updateBoardModal,
-      closeModal
+      closeModal,
+      addColumn
     }}>
       {children}
     </PortalContext.Provider>

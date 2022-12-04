@@ -48,3 +48,21 @@
 .group-item .form-control-textfield {
   width: 100%;
 }
+
+/* submit loading */
+.submit-loading {
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+  width: 28px;
+
+  border: 3px solid #fff;
+  border-bottom: 3px solid transparent;
+  border-radius: 50%;
+  animation: rotate 800ms ease-in-out infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}

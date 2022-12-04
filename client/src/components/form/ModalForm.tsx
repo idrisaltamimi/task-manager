@@ -45,6 +45,7 @@ const ModalForm: React.FC<Props> = ({
   const [name, setName] = useState(updateModal ? currentBoard.name : '')
   const [nameError, setNameError] = useState(false)
   const [description, setDescription] = useState('')
+  const [submitLoading, setSubmitLoading] = useState(false)
 
   const inputListObject = { name: '', id: uuid(), error: false }
   const newColumn = currentBoard.columns.map(({ name, _id }) => ({ name, id: getId(_id), error: false }))
@@ -102,11 +103,15 @@ const ModalForm: React.FC<Props> = ({
 
     switch (action) {
       case CREATE_BOARD:
+        setSubmitLoading(true)
         await createBoard({ name, columns: inputColumnsArray })
+        setSubmitLoading(false)
         break
       case UPDATE_BOARD:
-        return updateBoard({ name, columns: inputColumnsArray })
-
+        setSubmitLoading(true)
+        await updateBoard({ name, columns: inputColumnsArray })
+        setSubmitLoading(false)
+        break
       default:
         break
     }
@@ -179,7 +184,7 @@ const ModalForm: React.FC<Props> = ({
       />}
 
       <Button
-        text={submit}
+        text={submitLoading ? <div className='submit-loading' /> : submit}
         size='small'
         theme='main'
         fullWidth={true}

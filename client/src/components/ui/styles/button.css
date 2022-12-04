@@ -7,6 +7,10 @@
   font-family: var(--ff-primary);
   font-weight: 700;
   text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main {

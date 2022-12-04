@@ -8,3 +8,4 @@ export const fetchBoards = () => API.get(`/boards`)
 
 export const createBoard = (newBoard: BoardType) => API.post(`/boards/post`, newBoard)
 export const updateBoard = (id: string, updatedBoard: BoardType) => API.patch(`/boards/${id}`, updatedBoard)
+export const deleteBoard = (id: string) => API.delete(`/boards/delete/${id}`)
