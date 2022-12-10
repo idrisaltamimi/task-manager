@@ -1,11 +1,12 @@
 import { createContext, ReactElement, useState } from 'react'
 
 import * as api from '../api'
-import { BoardType } from '../constants'
+import { BoardType, TaskType } from '../constants'
 
 export interface ActionsContextType {
   getBoards: () => void
   createBoard: (newBoard: BoardType) => void
+  createTask: (statusId: string, task: TaskType) => void
   updateBoard: (updatedBoard: BoardType) => void
   deleteBoard: () => void
   boards: BoardType[]
@@ -53,6 +54,16 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     }
   }
 
+  const createTask = async (statusId: string, task: TaskType) => {
+    try {
+      await api.createTask(currentBoardId, statusId, task)
+      getBoards()
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const updateBoard = async (updatedBoard: BoardType) => {
     try {
       await api.updateBoard(currentBoardId, updatedBoard)
@@ -77,6 +88,7 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     <ActionsContext.Provider value={{
       getBoards,
       createBoard,
+      createTask,
       updateBoard,
       deleteBoard,
       boards,

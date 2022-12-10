@@ -6,13 +6,21 @@ import './styles/select.css'
 
 interface Props {
   defaultValue: string
-  options: Array<string>
+  options: { id: string, name: string }[]
   label: string
+  current: { name: string, id: string }
+  getCurrent: (name: string, id: string) => void
 }
 
-const Select: React.FC<Props> = ({ defaultValue, options, label }) => {
+const Select: React.FC<Props> = ({
+  defaultValue,
+  options,
+  label,
+  current,
+  getCurrent
+}) => {
   const [menu, setMenu] = useState(false)
-  const [current, setCurrent] = useState('')
+  // const [current, setCurrent] = useState('')
   const optionRef = useRef<HTMLButtonElement>(null)
 
   const toggleMenu = () => setMenu(prev => !prev)
@@ -25,9 +33,8 @@ const Select: React.FC<Props> = ({ defaultValue, options, label }) => {
     optionRef.current.focus()
   }
 
-  const handleClick = (option: string) => {
-
-    setCurrent(option)
+  const handleClick = (name: string, id: string) => {
+    getCurrent(name, id)
     toggleMenu()
   }
 
@@ -40,20 +47,21 @@ const Select: React.FC<Props> = ({ defaultValue, options, label }) => {
 
         <div className='select-container'>
           <button className={`select ${selectClassName}`} onClick={openMenu} type='button'>
-            {current || defaultValue} <img src={chevronDown} alt='' />
+            {current.name || defaultValue} <img src={chevronDown} alt='' />
           </button>
 
           {menu &&
             <div className='select-options'>
-              {options.length && options.map((option, index) => (
+              {options.length && options.map(({ name, id }, index) => (
                 <button
+                  className='option'
                   key={uuid()}
                   ref={index === 0 ? optionRef : null}
-                  className='option'
-                  onClick={() => handleClick(option)}
+                  onClick={() => handleClick(name, id)}
+                  id={id}
                   type='button'
                 >
-                  {option}
+                  {name}
                 </button>
               ))}
             </div>}

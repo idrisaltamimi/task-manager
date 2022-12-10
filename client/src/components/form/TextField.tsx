@@ -11,6 +11,7 @@ interface Props {
   label?: string
   placeholder?: string
   required: boolean
+  autoFocus?: boolean
   id: string
   textField: textField
   fn?: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -21,6 +22,7 @@ const TextField: React.FC<Props> = ({
   label,
   placeholder,
   required,
+  autoFocus = false,
   id,
   textField: { value, error },
   fn,
@@ -51,7 +53,7 @@ const TextField: React.FC<Props> = ({
           type={type}
           onChange={fn}
           ref={textfieldRef}
-          autoFocus
+          autoFocus={autoFocus}
           autoComplete='off'
         />
       </div>

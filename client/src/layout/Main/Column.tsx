@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ColumnType } from '../../constants'
+import { Task } from './'
 import './styles/column.css'
 
 interface Props {
@@ -18,8 +19,10 @@ const Column: React.FC<Props> = ({ column }) => {
           + Add Task
         </button>
       ) : (
-        <div>
-
+        <div className='tasks-container'>
+          {column.tasks?.map((task) => (
+            <Task key={task._id} {...task} />
+          ))}
         </div>
       )}
     </div>

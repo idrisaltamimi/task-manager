@@ -1,13 +1,15 @@
 export interface SubTaskType {
+  _id?: string,
   title: string,
-  isCompleted: Boolean
+  isCompleted: boolean
 }
 
 export interface TaskType {
+  _id?: string,
   title: string,
   description: string,
   status: string,
-  subtasks?: SubTaskType[]
+  subtasks: SubTaskType[]
 }
 
 export interface ColumnType {

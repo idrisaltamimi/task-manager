@@ -13,7 +13,7 @@ interface Props {
 const Header: React.FC<Props> = () => {
   const { showSidebar, hideMenu, toggleMenu } = useContext(ThemeContext) as ThemeContextType
   const { currentBoard, deleteBoard } = useContext(ActionsContext) as ActionsContextType
-  const { addColumn } = useContext(PortalContext) as PortalContextType
+  const { addColumn, addTaskModal } = useContext(PortalContext) as PortalContextType
   const [dropMenu, setDropMenu] = useState(false)
   const [removeLoading, setRemoveLoading] = useState(false)
 
@@ -65,6 +65,7 @@ const Header: React.FC<Props> = () => {
             text='+ Add New Task'
             size='large'
             disable={currentBoard.columns.length === 0}
+            fn={addTaskModal}
           />
         </div>
 

@@ -5,7 +5,7 @@ import { CheckboxGroup, Select, TextArea, TextField } from './'
 import { Button } from '../ui'
 import { ActionsContext, ActionsContextType } from '../../actions'
 import { PortalContext, PortalContextType } from '../../context'
-import { CREATE_BOARD, UPDATE_BOARD } from '../../constants'
+import { CREATE_BOARD, CREATE_TASK, UPDATE_BOARD } from '../../constants'
 import './styles/modalForm.css'
 import { cross } from '../../assets'
 import { getId } from '../../utils'
@@ -16,12 +16,20 @@ interface inputListType {
   error: boolean
 }
 
+interface selectType {
+  defaultValue: { id: string, name: string }
+  label: string
+  options: { id: string, name: string }[]
+  current: { id: string, name: string }
+  getCurrent: (name: string, id: string) => void
+}
+
 interface Props {
   title: string
   paragraph?: string
   textInput?: { id: string, label: string, placeholder: string }
   textArea?: { id: string, label: string, placeholder: string }
-  select?: { defaultValue: string, label: string, options: Array<string> }
+  select?: selectType
   checkbox?: { label: string, checkBoxes: Array<string> }
   inputArray?: { label: string, buttonLabel: string, }
   submit: string
@@ -39,7 +47,7 @@ const ModalForm: React.FC<Props> = ({
   action,
   inputArray
 }) => {
-  const { createBoard, currentBoard, updateBoard } = useContext(ActionsContext) as ActionsContextType
+  const { createBoard, currentBoard, updateBoard, createTask } = useContext(ActionsContext) as ActionsContextType
   const { closeModal, updateModal } = useContext(PortalContext) as PortalContextType
 
   const [name, setName] = useState(updateModal ? currentBoard.name : '')
@@ -52,6 +60,8 @@ const ModalForm: React.FC<Props> = ({
   const currentInputListObject = (updateModal && currentBoard.columns.length > 0) ? newColumn : [inputListObject]
   const [inputList, setInputList] = useState<inputListType[]>(currentInputListObject)
 
+  const startLoading = () => setSubmitLoading(true)
+  const stopLoading = () => setSubmitLoading(true)
 
   const addColumnInput = () => {
     const id = uuid()
@@ -101,17 +111,34 @@ const ModalForm: React.FC<Props> = ({
 
     const inputColumnsArray = inputList.map(({ name }) => ({ name }))
 
+    const inputSubtaskArray = inputList.map(({ name }) => ({ title: name, isCompleted: false }))
+
     switch (action) {
       case CREATE_BOARD:
-        setSubmitLoading(true)
+        startLoading()
         await createBoard({ name, columns: inputColumnsArray })
-        setSubmitLoading(false)
+        stopLoading()
         break
+
       case UPDATE_BOARD:
-        setSubmitLoading(true)
+        startLoading()
         await updateBoard({ name, columns: inputColumnsArray })
-        setSubmitLoading(false)
+        stopLoading()
         break
+
+      case CREATE_TASK:
+        startLoading()
+        await createTask(getId(select?.current.id),
+          {
+            title: name,
+            description,
+            status: select?.current.name || '',
+            subtasks: inputSubtaskArray
+          }
+        )
+        stopLoading()
+        break
+
       default:
         break
     }
@@ -132,6 +159,7 @@ const ModalForm: React.FC<Props> = ({
         id={textInput.id}
         placeholder={textInput.placeholder}
         textField={{ value: name, error: nameError }}
+        autoFocus={name === ''}
         fn={textfieldChange}
       />}
 
@@ -154,6 +182,7 @@ const ModalForm: React.FC<Props> = ({
                 placeholder=''
                 id={id}
                 textField={{ value: name, error: error }}
+                autoFocus={name !== ''}
                 fn={(e: ChangeEvent) => inputListChange(e, id)}
               />
               <button type='button' onClick={() => removeInput(id)}>
@@ -173,9 +202,11 @@ const ModalForm: React.FC<Props> = ({
       </div>}
 
       {select && <Select
-        defaultValue={select.defaultValue}
+        defaultValue={select.defaultValue.name}
         options={select.options}
         label={select.label}
+        current={select.current}
+        getCurrent={select.getCurrent}
       />}
 
       {checkbox && <CheckboxGroup
