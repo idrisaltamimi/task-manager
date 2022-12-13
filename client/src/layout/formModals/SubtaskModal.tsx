@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { ActionsContext, ActionsContextType } from '../../actions'
 import { PortalContext, PortalContextType } from '../../context'
@@ -47,8 +47,14 @@ const SubtaskModal = () => {
         current._id === column._id ? { ...column, tasks: newTasks } : column
       )
     })
+
     return setUpdate({ ...currentBoard, columns: newColumns })
   }
+
+  useEffect(() => {
+    updatedBoard()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTask, current])
 
   return (
     <Modal close={() => closeAndPost(update)}>
@@ -67,10 +73,7 @@ const SubtaskModal = () => {
           options={options}
           label={'Current Status'}
           current={current}
-          getCurrent={(name, _id) => {
-            setCurrent({ name, _id })
-            updatedBoard()
-          }}
+          getCurrent={(name, _id) => setCurrent({ name, _id })}
         />
       </form>
     </Modal>

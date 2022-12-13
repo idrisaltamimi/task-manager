@@ -49,7 +49,7 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
     setSubtaskModal(false)
   }
 
-  const closeAndPost = (updatedBoard: BoardType) => {
+  const closeAndPost = async (updatedBoard: BoardType) => {
     updateBoard(updatedBoard)
     setSubtaskModal(false)
   }

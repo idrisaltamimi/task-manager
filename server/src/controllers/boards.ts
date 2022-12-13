@@ -35,7 +35,7 @@ export const updateBoard = async (req, res) => {
 
   const updatedBoard = await Boards.findByIdAndUpdate(id, { ...board, id, createdAt: new Date().toISOString() })
 
-  res.json(updatedBoard)
+  res.json(updatedBoard.columns)
 }
 
 export const createTask = async (req, res) => {

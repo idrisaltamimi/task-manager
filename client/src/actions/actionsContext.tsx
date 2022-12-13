@@ -72,6 +72,7 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
   }
 
   const updateBoard = async (updatedBoard: BoardType) => {
+    console.log(updatedBoard)
     try {
       await api.updateBoard(getId(currentBoard._id), updatedBoard)
       getBoards()
