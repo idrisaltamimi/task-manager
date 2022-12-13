@@ -4,7 +4,7 @@
 }
 
 .columns {
-  padding: 23px 0 50px 0;
+  padding-top: 23px;
   display: flex;
   gap: 24px;
 
@@ -47,6 +47,12 @@
 
 .column:nth-child(4n) .column-color-circle {
   background-color: #e26767;
+}
+
+@media (min-width: 600px) {
+  .columns {
+    padding: 23px 0 50px 0;
+  }
 }
 
 /* empty columns */

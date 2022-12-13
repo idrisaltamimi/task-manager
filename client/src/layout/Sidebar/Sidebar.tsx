@@ -13,10 +13,10 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ sidebarClassName }) => {
   const { mode, toggleMode, toggleMenu, hideMenu } = useContext(ThemeContext) as ThemeContextType
-  const { boards, currentBoardId, getCurrentBoardId } = useContext(ActionsContext) as ActionsContextType
+  const { boards, currentBoard, getCurrentBoard } = useContext(ActionsContext) as ActionsContextType
   const { addBoardModal } = useContext(PortalContext) as PortalContextType
 
-  const currentClassName = (id: string) => currentBoardId === id ? 'current' : ''
+  const currentClassName = (id: string) => currentBoard._id === id ? 'current' : ''
 
   const togglerClassName = mode ? 'dark' : ''
 
@@ -26,7 +26,7 @@ const Sidebar: React.FC<Props> = ({ sidebarClassName }) => {
   }
 
   const changeId = (id: string) => {
-    getCurrentBoardId(id)
+    getCurrentBoard(id)
     hideMenu()
   }
 

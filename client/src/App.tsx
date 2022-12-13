@@ -4,11 +4,11 @@ import { Header } from './layout/Header'
 import { PortalContext, PortalContextType, ThemeContext, ThemeContextType } from './context'
 import { showSidebarIcon } from './assets'
 import { Main } from './layout/Main'
-import { AddBoard, AddTask } from './layout/formModals'
+import { AddBoard, AddTask, SubtaskModal } from './layout/formModals'
 import './app.css'
 
 export default function App() {
-  const { boardModal, taskModal } = useContext(PortalContext) as PortalContextType
+  const { boardModal, taskModal, subtaskModal } = useContext(PortalContext) as PortalContextType
   const { showSidebar, toggleMenu } = useContext(ThemeContext) as ThemeContextType
 
   const sidebarControlClassName = showSidebar ? 'hide-sidebar' : 'show-sidebar'
@@ -26,6 +26,8 @@ export default function App() {
       {boardModal && <AddBoard />}
 
       {taskModal && <AddTask />}
+
+      {subtaskModal && <SubtaskModal />}
     </div>
   )
 }

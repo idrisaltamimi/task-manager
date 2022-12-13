@@ -2,13 +2,13 @@ import mongoose from 'mongoose'
 
 const subtask = {
   id: String,
-  title: String,
+  name: String,
   isCompleted: Boolean
 }
 
 const task = {
   id: String,
-  title: String,
+  name: String,
   description: String,
   status: String,
   subtasks: [subtask]

@@ -27,6 +27,17 @@ export const createBoard = async (req, res) => {
   }
 }
 
+export const updateBoard = async (req, res) => {
+  const { id } = req.params
+  const board = req.body
+
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No BOARD with the id ${id}`)
+
+  const updatedBoard = await Boards.findByIdAndUpdate(id, { ...board, id, createdAt: new Date().toISOString() })
+
+  res.json(updatedBoard)
+}
+
 export const createTask = async (req, res) => {
   const { id } = req.params
   const { task, statusId } = req.body
@@ -46,17 +57,6 @@ export const createTask = async (req, res) => {
       new: true
     }
   )
-
-  res.json(updatedBoard)
-}
-
-export const updateBoard = async (req, res) => {
-  const { id } = req.params
-  const board = req.body
-
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No BOARD with the id ${id}`)
-
-  const updatedBoard = await Boards.findByIdAndUpdate(id, { ...board, id, createdAt: new Date().toISOString() })
 
   res.json(updatedBoard)
 }

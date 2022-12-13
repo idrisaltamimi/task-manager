@@ -11,3 +11,4 @@ export const updateBoard = (id: string, updatedBoard: BoardType) => API.patch(`/
 export const deleteBoard = (id: string) => API.delete(`/boards/delete/${id}`)
 
 export const createTask = (boardId: string, statusId: string, task: TaskType) => API.patch(`/boards/task/${boardId}`, { statusId, task })
+export const updateTask = (boardId: string, statusId: string, task: TaskType) => API.patch(`/boards/update-task/${boardId}`, { statusId, task })

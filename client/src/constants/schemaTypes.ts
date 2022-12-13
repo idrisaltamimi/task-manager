@@ -1,12 +1,12 @@
 export interface SubTaskType {
   _id?: string,
-  title: string,
+  name: string,
   isCompleted: boolean
 }
 
 export interface TaskType {
   _id?: string,
-  title: string,
+  name: string,
   description: string,
   status: string,
   subtasks: SubTaskType[]

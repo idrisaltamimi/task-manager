@@ -30,7 +30,7 @@
   line-height: 15px;
 }
 
-.checkbox-input:checked~.label-text {
+.checked-label {
   text-decoration: line-through;
   opacity: .5;
 }

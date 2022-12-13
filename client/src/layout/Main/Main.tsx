@@ -5,7 +5,7 @@ import { NoColumns, Column, DashboardLoading } from './'
 import './styles/main.css'
 
 const Main = () => {
-  const { getBoards, currentBoard, isLoading } = useContext(ActionsContext) as ActionsContextType
+  const { getBoards, currentBoard, isLoading, boards } = useContext(ActionsContext) as ActionsContextType
 
   useEffect(() => {
     getBoards()
@@ -14,13 +14,11 @@ const Main = () => {
 
   const mainClassName = currentBoard.columns.length === 0 ? 'no-columns' : 'columns'
 
-  if (isLoading) return <DashboardLoading />
+  if (isLoading && boards.length === 0) return <DashboardLoading />
 
   return (
     <main className={mainClassName}>
-      {currentBoard.columns.length === 0 ? (
-        <NoColumns />
-      ) : (
+      {currentBoard.columns.length > 0 ? (
         <>
           {currentBoard.columns.map((column) => (
             <Column
@@ -32,6 +30,8 @@ const Main = () => {
             + New Column
           </button>
         </>
+      ) : (
+        <NoColumns />
       )}
     </main>
   )

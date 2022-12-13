@@ -1,25 +1,31 @@
 import React from 'react'
 import uuid from 'react-uuid'
 
+import { TaskType } from '../../constants'
+import { getId } from '../../utils'
 import CheckBox from './CheckBox'
 import './styles/checkboxGroup.css'
 
 interface Props {
   label: string
-  checkBoxes: Array<string>
+  currentTask: TaskType
+  handleChange: (id: string) => void
 }
 
-const CheckboxGroup: React.FC<Props> = ({ label, checkBoxes }) => {
+const CheckboxGroup: React.FC<Props> = ({ label, currentTask, handleChange }) => {
+
   return (
     <div className='checkbox-group-control'>
       <label className='label'>{label}</label>
       <div className='checkbox-group'>
-        {checkBoxes.map((checkBox) => (
+        {currentTask.subtasks.map(({ name, isCompleted, _id }) => (
           <CheckBox
             key={uuid()}
-            label={checkBox}
-            id={checkBox}
-            value={checkBox}
+            label={name}
+            id={getId(_id)}
+            value={name}
+            isCompleted={isCompleted}
+            handleChange={handleChange}
           />
         ))}
       </div>

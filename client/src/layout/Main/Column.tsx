@@ -1,4 +1,5 @@
 import React from 'react'
+import uuid from 'react-uuid'
 
 import { ColumnType } from '../../constants'
 import { Task } from './'
@@ -15,13 +16,18 @@ const Column: React.FC<Props> = ({ column }) => {
         {column.name} ({column.tasks?.length})
       </h4>
       {column.tasks?.length === 0 ? (
-        <button className='empty-column'>
+        <button className='empty-column' onClick={() => { }}>
           + Add Task
         </button>
       ) : (
         <div className='tasks-container'>
           {column.tasks?.map((task) => (
-            <Task key={task._id} {...task} />
+            <Task
+              key={task._id || uuid()}
+              column={column}
+              task={task}
+              {...task}
+            />
           ))}
         </div>
       )}

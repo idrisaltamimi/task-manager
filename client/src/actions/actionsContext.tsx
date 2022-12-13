@@ -1,32 +1,50 @@
-import { createContext, ReactElement, useState } from 'react'
+import { createContext, ReactElement, SetStateAction, useState } from 'react'
 
 import * as api from '../api'
-import { BoardType, TaskType } from '../constants'
+import { BoardType, ColumnType, TaskType } from '../constants'
+import { getId } from '../utils'
 
 export interface ActionsContextType {
+  boards: BoardType[]
+  currentBoard: BoardType
+  currentColumn: ColumnType
+  currentTask: TaskType
+  isLoading: boolean
   getBoards: () => void
   createBoard: (newBoard: BoardType) => void
   createTask: (statusId: string, task: TaskType) => void
   updateBoard: (updatedBoard: BoardType) => void
   deleteBoard: () => void
-  boards: BoardType[]
-  currentBoard: BoardType
-  currentBoardId: string
-  getCurrentBoardId: (boardId: string) => void
-  isLoading: boolean
+  getCurrentBoard: (boardId: string) => void
+  getCurrentColumn: (columnId: string) => void
+  getCurrentTask: (task: TaskType) => void
+  setCurrentTask: SetStateAction<any>
 }
+
+const board = { name: '', _id: '', createdAt: '', columns: [] }
+const column = { name: '', _id: '', tasks: [] }
+const task = { _id: '', name: '', description: '', status: '', subtasks: [] }
 
 const ActionsContext = createContext<ActionsContextType | null>(null)
 
 const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
   const [boards, setBoards] = useState([])
-  const [currentBoardId, setCurrentBoardId] = useState('')
-  const [currentBoard, setCurrentBoard] = useState<any>({ name: '', _id: '', createdAt: '', columns: [] })
-  const [isLoading, setIsLoading] = useState(true)
+  const [currentBoard, setCurrentBoard] = useState<BoardType>(board)
+  const [currentColumn, setCurrentColumn] = useState<ColumnType>(column)
+  const [currentTask, setCurrentTask] = useState<TaskType>(task)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const getCurrentBoardId = (boardId: string) => {
-    setCurrentBoardId(boardId)
-    setCurrentBoard(boards.find(({ _id }) => _id === boardId))
+  const getCurrentBoard = (boardId: string) => {
+    if (boards.length < 1) return
+    setCurrentBoard(boards.find(({ _id }) => _id === boardId) || board)
+  }
+
+  const getCurrentColumn = (columnId: string) => {
+    setCurrentColumn(currentBoard.columns.find(({ _id }) => _id === columnId) || column)
+  }
+
+  const getCurrentTask = (task: TaskType) => {
+    setCurrentTask(task)
   }
 
   const getBoards = async () => {
@@ -35,7 +53,6 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
 
     try {
       setBoards(data)
-      setCurrentBoardId(data[0]._id)
       setCurrentBoard(data[0])
       setIsLoading(false)
 
@@ -54,9 +71,9 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     }
   }
 
-  const createTask = async (statusId: string, task: TaskType) => {
+  const updateBoard = async (updatedBoard: BoardType) => {
     try {
-      await api.createTask(currentBoardId, statusId, task)
+      await api.updateBoard(getId(currentBoard._id), updatedBoard)
       getBoards()
 
     } catch (error) {
@@ -64,9 +81,19 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     }
   }
 
-  const updateBoard = async (updatedBoard: BoardType) => {
+  const createTask = async (statusId: string, task: TaskType) => {
     try {
-      await api.updateBoard(currentBoardId, updatedBoard)
+      await api.createTask(getId(currentBoard._id), statusId, task)
+      getBoards()
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const updateTask = async (statusId: string, task: TaskType) => {
+    try {
+      await api.updateTask(getId(currentBoard._id), statusId, task)
       getBoards()
 
     } catch (error) {
@@ -76,7 +103,7 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
 
   const deleteBoard = async () => {
     try {
-      await api.deleteBoard(currentBoardId)
+      await api.deleteBoard(getId(currentBoard._id))
       getBoards()
 
     } catch (error) {
@@ -93,9 +120,13 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
       deleteBoard,
       boards,
       currentBoard,
-      currentBoardId,
-      getCurrentBoardId,
-      isLoading
+      currentColumn,
+      currentTask,
+      getCurrentBoard,
+      getCurrentColumn,
+      getCurrentTask,
+      setCurrentTask,
+      isLoading,
     }}>
       {children}
     </ActionsContext.Provider>

@@ -6,10 +6,10 @@ import './styles/select.css'
 
 interface Props {
   defaultValue: string
-  options: { id: string, name: string }[]
+  options: { _id: string, name: string }[]
   label: string
-  current: { name: string, id: string }
-  getCurrent: (name: string, id: string) => void
+  current: { name: string, _id: string }
+  getCurrent: (name: string, _id: string) => void
 }
 
 const Select: React.FC<Props> = ({
@@ -52,13 +52,13 @@ const Select: React.FC<Props> = ({
 
           {menu &&
             <div className='select-options'>
-              {options.length && options.map(({ name, id }, index) => (
+              {options.length && options.map(({ name, _id }, index) => (
                 <button
                   className='option'
                   key={uuid()}
                   ref={index === 0 ? optionRef : null}
-                  onClick={() => handleClick(name, id)}
-                  id={id}
+                  onClick={() => handleClick(name, _id)}
+                  id={_id}
                   type='button'
                 >
                   {name}

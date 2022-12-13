@@ -1,13 +1,20 @@
-import { createContext, ReactElement, useState } from 'react'
+import { createContext, ReactElement, useContext, useState } from 'react'
+
+import { ActionsContext, ActionsContextType } from '../actions'
+import { BoardType } from '../constants'
 
 export interface PortalContextType {
   boardModal: boolean
+  editBoard: boolean
+  editTask: boolean
   taskModal: boolean
-  updateModal: boolean
+  subtaskModal: boolean
   addBoardModal: () => void
   addTaskModal: () => void
-  closeModal: () => void
+  openSubtaskModal: () => void
   addColumn: () => void
+  closeModal: () => void
+  closeAndPost: (updatedBoard: BoardType) => void
 }
 
 interface Props {
@@ -17,36 +24,59 @@ interface Props {
 const PortalContext = createContext<PortalContextType | null>(null)
 
 const PortalContextProvider: React.FC<Props> = ({ children }) => {
+  const { updateBoard } = useContext(ActionsContext) as ActionsContextType
   const [boardModal, setBoardModal] = useState(false)
   const [taskModal, setTaskModal] = useState(false)
-  const [updateModal, setUpdateModal] = useState(false)
+  const [subtaskModal, setSubtaskModal] = useState(false)
+  const [editBoard, setEditBoard] = useState(false)
+  const [editTask, setEditTask] = useState(false)
 
   const addBoardModal = () => setBoardModal(true)
 
+  const editBoardModal = () => setEditBoard(true)
+
   const addTaskModal = () => setTaskModal(true)
 
-  const updateBoardModal = () => setUpdateModal(true)
+  const editTaskModal = () => setEditTask(true)
+
+  const openSubtaskModal = () => setSubtaskModal(true)
 
   const closeModal = () => {
     setBoardModal(false)
-    setUpdateModal(false)
+    setEditBoard(false)
     setTaskModal(false)
+    setEditTask(false)
+    setSubtaskModal(false)
+  }
+
+  const closeAndPost = (updatedBoard: BoardType) => {
+    updateBoard(updatedBoard)
+    setSubtaskModal(false)
   }
 
   const addColumn = () => {
     addBoardModal()
-    updateBoardModal()
+    editBoardModal()
+  }
+
+  const addTask = () => {
+    addTaskModal()
+    editTaskModal()
   }
 
   return (
     <PortalContext.Provider value={{
       boardModal,
+      editBoard,
       taskModal,
-      updateModal,
+      editTask,
+      subtaskModal,
       addBoardModal,
       addTaskModal,
+      openSubtaskModal,
+      addColumn,
       closeModal,
-      addColumn
+      closeAndPost
     }}>
       {children}
     </PortalContext.Provider>
