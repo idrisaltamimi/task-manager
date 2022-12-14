@@ -38,52 +38,6 @@ export const updateBoard = async (req, res) => {
   res.json(updatedBoard.columns)
 }
 
-export const createTask = async (req, res) => {
-  const { id } = req.params
-  const { task, statusId } = req.body
-
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No BOARD with the id ${id}`)
-
-  const updatedBoard = await Boards.findOneAndUpdate(
-    {
-      _id: Object(id),
-      'columns._id': Object(statusId)
-    },
-    {
-      $push: { 'columns.$.tasks': task }
-    },
-    {
-      upsert: true,
-      new: true
-    }
-  )
-
-  res.json(updatedBoard)
-}
-
-export const updateTask = async (req, res) => {
-  const { id } = req.params
-  const { task, statusId } = req.body
-
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No BOARD with the id ${id}`)
-
-  const updatedBoard = await Boards.findOneAndUpdate(
-    {
-      _id: Object(id),
-      'columns._id': Object(statusId)
-    },
-    {
-      $push: { 'columns.$.tasks': task }
-    },
-    {
-      upsert: true,
-      new: true
-    }
-  )
-
-  res.json(updatedBoard)
-}
-
 export const deleteBoard = async (req, res) => {
   const { id } = req.params
 

@@ -4,9 +4,7 @@
 }
 
 .form-control-checkbox {
-  padding-top: 13px;
-  padding-bottom: 12px;
-  padding-left: 12px;
+  padding: 13px 16px 12px 12px;
   max-width: 416px;
   width: 100%;
 

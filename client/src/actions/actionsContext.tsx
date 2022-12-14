@@ -12,7 +12,6 @@ export interface ActionsContextType {
   isLoading: boolean
   getBoards: () => void
   createBoard: (newBoard: BoardType) => void
-  createTask: (statusId: string, task: TaskType) => void
   updateBoard: (updatedBoard: BoardType) => void
   deleteBoard: () => void
   getCurrentBoard: (boardId: string) => void
@@ -82,26 +81,6 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     }
   }
 
-  const createTask = async (statusId: string, task: TaskType) => {
-    try {
-      await api.createTask(getId(currentBoard._id), statusId, task)
-      getBoards()
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const updateTask = async (statusId: string, task: TaskType) => {
-    try {
-      await api.updateTask(getId(currentBoard._id), statusId, task)
-      getBoards()
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const deleteBoard = async () => {
     try {
       await api.deleteBoard(getId(currentBoard._id))
@@ -116,7 +95,6 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     <ActionsContext.Provider value={{
       getBoards,
       createBoard,
-      createTask,
       updateBoard,
       deleteBoard,
       boards,

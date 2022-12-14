@@ -10,27 +10,35 @@
 
 .modal {
   position: absolute;
-  max-width: 343px;
-  max-height: calc(100% - 32px);
-  width: calc(100% - 32px);
-  height: auto;
-  left: 50%;
   top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
+
+  max-height: calc(100% - 32px);
+  height: auto;
+  max-width: 343px;
+  width: calc(100% - 32px);
+
+
   padding: 24px;
   background-color: var(--clr-modal);
   border-radius: 6px;
-  z-index: 1000;
-  opacity: 0;
-  animation: show-modal 200ms ease-in-out forwards;
 
-  overflow: scroll;
+  overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  overflow-y: scroll;
+  z-index: 1010;
+
+  opacity: 0;
+  animation: show-modal 200ms ease-in-out forwards;
 }
 
-.modal::-webkit-scrollbar {
+.modal-container {
+  padding-right: 0;
+}
+
+.modal::-webkit-scrollbar,
+.modal-parent::-webkit-scrollbar {
   display: none;
 }
 
@@ -42,8 +50,8 @@
 
 @media (min-width: 376px) {
   .modal {
-    padding: 32px;
     max-width: 480px;
+    padding: 32px;
   }
 }
 

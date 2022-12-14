@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import uuid from 'react-uuid'
 import { chevronDown } from '../../assets'
 
@@ -10,20 +10,13 @@ interface Props {
   label: string
   current: { name: string, _id: string }
   getCurrent: (name: string, _id: string) => void
+  menu: boolean
+  toggleMenu: () => void
 }
 
-const Select: React.FC<Props> = ({
-  defaultValue,
-  options,
-  label,
-  current,
-  getCurrent
-}) => {
-  const [menu, setMenu] = useState(false)
-  // const [current, setCurrent] = useState('')
+const Select: React.FC<Props> = ({ defaultValue, options, label, current, getCurrent, toggleMenu, menu }) => {
   const optionRef = useRef<HTMLButtonElement>(null)
 
-  const toggleMenu = () => setMenu(prev => !prev)
 
   const openMenu = () => {
     toggleMenu()

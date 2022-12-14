@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 
 import { Sidebar } from '../Sidebar'
-import { Logo, Button } from '../../components/ui'
+import { Logo, Button, DropMenu } from '../../components/ui'
 import { PortalContext, PortalContextType, ThemeContext, ThemeContextType } from '../../context'
 import { ActionsContext, ActionsContextType } from '../../actions'
-import { chevronDown, addTaskMobile, verticalEllipsis } from '../../assets'
+import { chevronDown, addTaskMobile } from '../../assets'
 import './header.css'
 
 interface Props {
@@ -12,28 +12,14 @@ interface Props {
 
 const Header: React.FC<Props> = () => {
   const { showSidebar, hideMenu, toggleMenu } = useContext(ThemeContext) as ThemeContextType
-  const { currentBoard, deleteBoard } = useContext(ActionsContext) as ActionsContextType
-  const { addColumn, addTaskModal } = useContext(PortalContext) as PortalContextType
-  const [dropMenu, setDropMenu] = useState(false)
-  const [removeLoading, setRemoveLoading] = useState(false)
-
-  const toggleDropMenu = () => setDropMenu(prev => !prev)
+  const { currentBoard } = useContext(ActionsContext) as ActionsContextType
+  const { addTaskModal } = useContext(PortalContext) as PortalContextType
 
   const sidebarClassName = showSidebar ? 'show sidebar' : 'hide sidebar'
   const sidebarMenuClassName = showSidebar ? 'rotate-arrow' : 'arrow-down'
   const overlay = showSidebar ? 'overlay' : 'hide-overlay'
 
-  const editBoard = () => {
-    addColumn()
-    setDropMenu(false)
-  }
 
-  const removeBoard = async () => {
-    setRemoveLoading(true)
-    await deleteBoard()
-    setRemoveLoading(false)
-    setDropMenu(false)
-  }
 
   return (
     <header className='header'>
@@ -69,22 +55,10 @@ const Header: React.FC<Props> = () => {
           />
         </div>
 
-        <button className='edit-btn' onClick={toggleDropMenu}>
-          <img src={verticalEllipsis} alt='' />
-        </button>
+        <DropMenu
+          board={true}
+        />
 
-        {dropMenu && (
-          <>
-            <div className='drop-menu'>
-              <button type='button' onClick={editBoard}>Edit Board</button>
-              <button type='button' className='remove-btn' onClick={removeBoard}>
-                Delete Board
-                {removeLoading && <div className='remove-loading' />}
-              </button>
-            </div>
-            <div className='drop-menu-overlay' onClick={() => setDropMenu(false)} />
-          </>
-        )}
       </div>
     </header>
   )

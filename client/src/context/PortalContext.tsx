@@ -37,8 +37,6 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
 
   const addTaskModal = () => setTaskModal(true)
 
-  const editTaskModal = () => setEditTask(true)
-
   const openSubtaskModal = () => setSubtaskModal(true)
 
   const closeModal = () => {
@@ -57,11 +55,6 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
   const addColumn = () => {
     addBoardModal()
     editBoardModal()
-  }
-
-  const addTask = () => {
-    addTaskModal()
-    editTaskModal()
   }
 
   return (

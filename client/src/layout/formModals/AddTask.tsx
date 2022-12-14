@@ -9,7 +9,7 @@ import { useForm } from '../../hooks'
 import { getId } from '../../utils'
 
 const AddTask = () => {
-  const { currentBoard, currentTask, updateBoard } = useContext(ActionsContext) as ActionsContextType
+  const { currentBoard, currentColumn, currentTask, updateBoard } = useContext(ActionsContext) as ActionsContextType
   const { editTask, closeModal } = useContext(PortalContext) as PortalContextType
   const {
     name,
@@ -28,8 +28,11 @@ const AddTask = () => {
   )
 
   const options = currentBoard.columns.map(({ name, _id }) => ({ name, _id: getId(_id) }))
-  const [current, setCurrent] = useState({ name: options[0].name, _id: options[0]._id })
+  const [current, setCurrent] = useState({ _id: getId(currentColumn._id), name: currentColumn.name })
   const [description, setDescription] = useState('')
+  const [menu, setMenu] = useState(false)
+
+  const toggleMenu = () => setMenu(prev => !prev)
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -56,7 +59,7 @@ const AddTask = () => {
   }
 
   return (
-    <Modal close={closeModal}>
+    <Modal close={closeModal} menu={menu} toggleMenu={toggleMenu}>
       <form className='modal-form' onSubmit={onSubmit}>
         <h2 className='modal-title'>Add New Task</h2>
         <TextField
@@ -89,6 +92,8 @@ const AddTask = () => {
           label={'Status'}
           current={current}
           getCurrent={(name, _id) => setCurrent({ name, _id })}
+          menu={menu}
+          toggleMenu={toggleMenu}
         />
         <Button
           text={submitLoading ? <div className='submit-loading' /> : editTask ? 'Save Changes' : 'Create Task'}

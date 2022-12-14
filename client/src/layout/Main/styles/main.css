@@ -58,7 +58,7 @@
 /* empty columns */
 .empty-column,
 .add-new-column {
-  height: 100%;
+  height: calc(100% - 60px);
   background: linear-gradient(var(--clr-emptyColumn));
   color: #828FA3;
   font-style: normal;
@@ -68,6 +68,14 @@
   text-align: center;
   border: 0;
   border-radius: 6px;
+}
+
+@media (min-width: 600px) {
+
+  .empty-column,
+  .add-new-column {
+    height: 100%;
+  }
 }
 
 .empty-column:hover,

@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 
 import { ActionsContext, ActionsContextType } from '../../actions'
+import { PortalContext, PortalContextType } from '../../context'
 import { NoColumns, Column, DashboardLoading } from './'
 import './styles/main.css'
 
 const Main = () => {
+  const { addColumn } = useContext(PortalContext) as PortalContextType
   const { getBoards, currentBoard, isLoading, boards } = useContext(ActionsContext) as ActionsContextType
 
   useEffect(() => {
@@ -26,7 +28,7 @@ const Main = () => {
               column={column}
             />
           ))}
-          <button className='column add-new-column'>
+          <button className='column add-new-column' onClick={addColumn}>
             + New Column
           </button>
         </>
