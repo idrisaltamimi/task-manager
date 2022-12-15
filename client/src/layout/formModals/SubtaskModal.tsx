@@ -6,7 +6,6 @@ import { CheckboxGroup, Select } from '../../components/form'
 import { DropMenu, Modal } from '../../components/ui'
 import { getId } from '../../utils'
 import { BoardType, TaskType } from '../../constants'
-import { verticalEllipsis } from '../../assets'
 import './styles/modalForm.css'
 
 const SubtaskModal = () => {
@@ -18,21 +17,6 @@ const SubtaskModal = () => {
   const options = currentBoard.columns.map(({ name, _id }) => ({ name, _id: getId(_id) }))
   const [current, setCurrent] = useState({ _id: getId(currentColumn._id), name: currentColumn.name })
   const [update, setUpdate] = useState<BoardType>(currentBoard)
-
-  const [dropMenu, setDropMenu] = useState(false)
-  const [removeLoading, setRemoveLoading] = useState(false)
-
-  const toggleDropMenu = () => setDropMenu(prev => !prev)
-
-  const editBoard = () => {
-    setDropMenu(false)
-  }
-
-  const removeBoard = async () => {
-    setRemoveLoading(true)
-    setRemoveLoading(false)
-    setDropMenu(false)
-  }
 
   const changeCurrentTask = (id: string) => {
     setCurrentTask((prev: TaskType) => {
@@ -76,7 +60,7 @@ const SubtaskModal = () => {
   const toggleMenu = () => setMenu(prev => !prev)
 
   return (
-    <Modal close={() => closeAndPost(update)} newClass={true} menu={menu} toggleMenu={toggleMenu}>
+    <Modal close={() => closeAndPost(update)} menu={menu}>
       <form className='modal-form subtasks-modal-form'>
         <div className='subtasks-modal-header'>
           <h2 className='modal-title subtasks-modal-title'>{name}</h2>

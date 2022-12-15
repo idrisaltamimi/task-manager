@@ -16,7 +16,7 @@ const Main = () => {
 
   const mainClassName = currentBoard.columns.length === 0 ? 'no-columns' : 'columns'
 
-  if (isLoading && boards.length === 0) return <DashboardLoading />
+  if (isLoading && boards.length < 1) return <DashboardLoading />
 
   return (
     <main className={mainClassName}>

@@ -1,33 +1,21 @@
 import { useContext } from 'react'
+import { Route, Routes } from 'react-router-dom'
 
-import { Header } from './layout/Header'
-import { PortalContext, PortalContextType, ThemeContext, ThemeContextType } from './context'
-import { showSidebarIcon } from './assets'
-import { Main } from './layout/Main'
-import { AddBoard, AddTask, SubtaskModal } from './layout/formModals'
+import { ThemeContext, ThemeContextType } from './context'
+import { Home, Login } from './pages'
 import './app.css'
 
 export default function App() {
-  const { boardModal, taskModal, subtaskModal } = useContext(PortalContext) as PortalContextType
-  const { showSidebar, toggleMenu } = useContext(ThemeContext) as ThemeContextType
+  const { showSidebar } = useContext(ThemeContext) as ThemeContextType
 
   const sidebarControlClassName = showSidebar ? 'hide-sidebar' : 'show-sidebar'
 
   return (
     <div className={sidebarControlClassName}>
-      <Header />
-
-      <Main />
-
-      <button className='show-sidebar-btn' onClick={toggleMenu}>
-        <img src={showSidebarIcon} alt='' />
-      </button>
-
-      {boardModal && <AddBoard />}
-
-      {taskModal && <AddTask />}
-
-      {subtaskModal && <SubtaskModal />}
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+      </Routes>
     </div>
   )
 }

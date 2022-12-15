@@ -40,9 +40,10 @@ const AddBoard = () => {
 
     if (editBoard) {
       const newBoard = await currentBoard.columns.map((item) => {
-        const current = inputList.find(({ _id }) => _id === item._id)
-        return { ...current, name: current.name }
-      })
+        const current = inputList?.find(({ _id }) => _id === item._id)
+        return current === undefined ? undefined : { ...current, name: current.name }
+      }).filter(item => item !== undefined)
+
       await inputList.forEach((item) => item.new && newBoard.push({ name: item.name }))
 
       await updateBoard({ ...currentBoard, name: name, columns: newBoard })

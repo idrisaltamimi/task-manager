@@ -43,6 +43,7 @@ const Header: React.FC<Props> = () => {
             text={<img src={addTaskMobile} alt='' />}
             size='x-small'
             disable={currentBoard.columns.length === 0}
+            fn={addTaskModal}
           />
         </div>
         <div className='large-btn'>

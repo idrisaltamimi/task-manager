@@ -14,11 +14,10 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
-  max-height: calc(100% - 32px);
+  max-height: calc(100% - 100px);
   height: auto;
   max-width: 343px;
   width: calc(100% - 32px);
-
 
   padding: 24px;
   background-color: var(--clr-modal);

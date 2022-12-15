@@ -12,7 +12,7 @@ interface Props {
 
 const DropMenu: React.FC<Props> = ({ board = false, task = false }) => {
   const { deleteBoard, updateBoard, currentColumn, currentBoard, currentTask } = useContext(ActionsContext) as ActionsContextType
-  const { addColumn, closeModal } = useContext(PortalContext) as PortalContextType
+  const { addColumn, closeModal, editTaskModal } = useContext(PortalContext) as PortalContextType
 
   const [dropMenu, setDropMenu] = useState(false)
   const [removeLoading, setRemoveLoading] = useState(false)
@@ -21,6 +21,10 @@ const DropMenu: React.FC<Props> = ({ board = false, task = false }) => {
 
   const edit = () => {
     board && addColumn()
+    if (task) {
+      closeModal()
+      editTaskModal()
+    }
     setDropMenu(false)
   }
 

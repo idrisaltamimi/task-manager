@@ -7,6 +7,7 @@ import { Select, TextArea, TextField, TextfieldGroup } from '../../components/fo
 import { Button, Modal } from '../../components/ui'
 import { useForm } from '../../hooks'
 import { getId } from '../../utils'
+import './styles/modalForm.css'
 
 const AddTask = () => {
   const { currentBoard, currentColumn, currentTask, updateBoard } = useContext(ActionsContext) as ActionsContextType
@@ -27,9 +28,13 @@ const AddTask = () => {
     editTask ? currentTask.subtasks : [{ _id: uuid(), name: '', isCompleted: false }]
   )
 
+  const currentTaskStatus = editTask ?
+    { _id: getId(currentColumn._id), name: currentColumn.name } :
+    { _id: getId(currentBoard.columns[0]._id), name: currentBoard.columns[0].name }
   const options = currentBoard.columns.map(({ name, _id }) => ({ name, _id: getId(_id) }))
-  const [current, setCurrent] = useState({ _id: getId(currentColumn._id), name: currentColumn.name })
-  const [description, setDescription] = useState('')
+
+  const [current, setCurrent] = useState(currentTaskStatus)
+  const [description, setDescription] = useState(editTask ? currentTask.description : '')
   const [menu, setMenu] = useState(false)
 
   const toggleMenu = () => setMenu(prev => !prev)
@@ -45,11 +50,17 @@ const AddTask = () => {
 
     const subtasks = inputList.map(({ name, isCompleted }) => ({ name, isCompleted: isCompleted || false }))
     const newTask = { name, description, status: current.name, subtasks }
-    const newColumns = currentBoard.columns
 
     if (editTask) {
-      return
+      const newTasks = currentColumn.tasks?.map((item) => (
+        item._id === currentTask._id ? { ...item, ...newTask } : item
+      ))
+      const newColumns = currentBoard.columns.map((item) => (
+        item._id === currentColumn._id ? { ...item, tasks: newTasks } : item
+      ))
+      await updateBoard({ ...currentBoard, columns: newColumns })
     } else {
+      const newColumns = currentBoard.columns
       await newColumns.forEach(({ _id, tasks }) => current._id === _id && tasks?.push(newTask))
       await updateBoard({ ...currentBoard, columns: newColumns })
     }
@@ -59,9 +70,9 @@ const AddTask = () => {
   }
 
   return (
-    <Modal close={closeModal} menu={menu} toggleMenu={toggleMenu}>
+    <Modal close={closeModal} menu={menu}>
       <form className='modal-form' onSubmit={onSubmit}>
-        <h2 className='modal-title'>Add New Task</h2>
+        <h2 className='modal-title'>{editTask ? 'Edit Task' : 'Add New Task'}</h2>
         <TextField
           type='text'
           required={false}

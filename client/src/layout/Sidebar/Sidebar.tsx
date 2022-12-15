@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import uuid from 'react-uuid'
 
+import { SidebarLoading } from './'
 import { ActionsContext, ActionsContextType } from '../../actions'
 import { board, darkTheme, lightTheme, hideSidebar } from '../../assets'
 import { PortalContext, PortalContextType, ThemeContext, ThemeContextType } from '../../context'
@@ -13,7 +14,7 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ sidebarClassName }) => {
   const { mode, toggleMode, toggleMenu, hideMenu } = useContext(ThemeContext) as ThemeContextType
-  const { boards, currentBoard, getCurrentBoard } = useContext(ActionsContext) as ActionsContextType
+  const { boards, currentBoard, getCurrentBoard, isLoading } = useContext(ActionsContext) as ActionsContextType
   const { addBoardModal } = useContext(PortalContext) as PortalContextType
 
   const currentClassName = (id: string) => currentBoard._id === id ? 'current' : ''
@@ -35,17 +36,21 @@ const Sidebar: React.FC<Props> = ({ sidebarClassName }) => {
       <label className='label sidebar-label'>ALL BOARDS ({boards.length})</label>
 
       <div className='buttons-container'>
-        {boards.length > 0 && boards.map(({ name, _id }) => (
-          <button
-            key={uuid()}
-            className={`board ${currentClassName(getId(_id))}`}
-            onClick={() => changeId(getId(_id))}
-          >
-            <img src={board} alt='' className='board-logo' />
-            {name}
-          </button>
-        )
-        )}
+        {(isLoading && boards.length < 1
+        ) ? (
+          <SidebarLoading />
+        ) : (
+          boards.length > 0 && boards.map(({ name, _id }) => (
+            <button
+              key={uuid()}
+              className={`board ${currentClassName(getId(_id))}`}
+              onClick={() => changeId(getId(_id))}
+            >
+              <img src={board} alt='' className='board-logo' />
+              {name}
+            </button>
+          )
+          ))}
         <button className='board' onClick={addBoard}>
           <img src={board} alt='' className='board-logo' />
           + Create New Board

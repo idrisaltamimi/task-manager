@@ -11,6 +11,7 @@ export interface PortalContextType {
   subtaskModal: boolean
   addBoardModal: () => void
   addTaskModal: () => void
+  editTaskModal: () => void
   openSubtaskModal: () => void
   addColumn: () => void
   closeModal: () => void
@@ -37,6 +38,10 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
 
   const addTaskModal = () => setTaskModal(true)
 
+  const editTaskModal = () => {
+    addTaskModal()
+    setEditTask(true)
+  }
   const openSubtaskModal = () => setSubtaskModal(true)
 
   const closeModal = () => {
@@ -66,6 +71,7 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
       subtaskModal,
       addBoardModal,
       addTaskModal,
+      editTaskModal,
       openSubtaskModal,
       addColumn,
       closeModal,
