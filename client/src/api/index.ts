@@ -3,7 +3,7 @@ import axios from 'axios'
 import { newUserType, userType } from '../actions'
 import { BoardType } from '../constants'
 
-const API = axios.create({ baseURL: 'http://localhost:5000' })
+const API = axios.create({ baseURL: 'https://kanban-server.cyclic.app' })
 
 export const fetchBoards = (userId: string) => API.get(`/boards/${userId}`)
 
