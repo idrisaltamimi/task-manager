@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { ThemeContext, ThemeContextType } from './context'
-import { Home, Login } from './pages'
+import { Home, Login, NotFound } from './pages'
 import './app.css'
 
 export default function App() {
@@ -15,7 +15,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/home' element={<Home />} />
-        <Route path='*' element={<Home />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
   )
