@@ -33,7 +33,7 @@ export const updateBoard = async (req, res) => {
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No BOARD with the id ${id}`)
 
-  const updatedBoard = await Boards.findByIdAndUpdate(id, { ...board, id, createdAt: new Date().toISOString() })
+  const updatedBoard = await Boards.findByIdAndUpdate(id, { ...board, createdAt: new Date().toISOString() })
 
   res.json(updatedBoard.columns)
 }

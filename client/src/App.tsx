@@ -14,7 +14,7 @@ export default function App() {
     <div className={sidebarControlClassName}>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/auth' element={<Login />} />
       </Routes>
     </div>
   )

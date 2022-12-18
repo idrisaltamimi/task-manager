@@ -12,14 +12,12 @@ interface Props {
 
 const Header: React.FC<Props> = () => {
   const { showSidebar, hideMenu, toggleMenu } = useContext(ThemeContext) as ThemeContextType
-  const { currentBoard } = useContext(ActionsContext) as ActionsContextType
+  const { currentBoard, boards } = useContext(ActionsContext) as ActionsContextType
   const { addTaskModal } = useContext(PortalContext) as PortalContextType
 
   const sidebarClassName = showSidebar ? 'show sidebar' : 'hide sidebar'
   const sidebarMenuClassName = showSidebar ? 'rotate-arrow' : 'arrow-down'
   const overlay = showSidebar ? 'overlay' : 'hide-overlay'
-
-
 
   return (
     <header className='header'>
@@ -42,7 +40,7 @@ const Header: React.FC<Props> = () => {
             theme='main'
             text={<img src={addTaskMobile} alt='' />}
             size='x-small'
-            disable={currentBoard.columns.length === 0}
+            disable={boards.length > 0 ? currentBoard.columns.length === 0 : true}
             fn={addTaskModal}
           />
         </div>
@@ -51,13 +49,14 @@ const Header: React.FC<Props> = () => {
             theme='main'
             text='+ Add New Task'
             size='large'
-            disable={currentBoard.columns.length === 0}
+            disable={boards.length > 0 ? currentBoard.columns.length === 0 : true}
             fn={addTaskModal}
           />
         </div>
 
         <DropMenu
           board={true}
+          disabled={boards.length > 0 ? false : true}
         />
 
       </div>

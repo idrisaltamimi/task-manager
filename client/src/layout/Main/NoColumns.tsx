@@ -5,7 +5,7 @@ import { Button } from '../../components/ui'
 
 import './styles/noColumns.css'
 
-const NoColumns = () => {
+const NoColumns = ({ disabled }: { disabled?: boolean }) => {
   const { addColumn } = useContext(PortalContext) as PortalContextType
 
   return (
@@ -16,6 +16,7 @@ const NoColumns = () => {
         size='large'
         theme='main'
         fn={addColumn}
+        disable={disabled}
       />
     </div>
   )

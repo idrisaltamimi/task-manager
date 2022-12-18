@@ -1,13 +1,11 @@
 import mongoose from 'mongoose'
 
 const subtask = {
-  id: String,
   name: String,
   isCompleted: Boolean
 }
 
 const task = {
-  id: String,
   name: String,
   description: String,
   status: String,
@@ -15,13 +13,12 @@ const task = {
 }
 
 const column = {
-  id: String,
   name: String,
   tasks: [task]
 }
 
 const boardsSchema = new mongoose.Schema({
-  id: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   name: String,
   columns: [column],
   createdAt: {

@@ -14,27 +14,24 @@ const Main = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const mainClassName = currentBoard.columns.length === 0 ? 'no-columns' : 'columns'
 
   if (isLoading && boards.length < 1) return <DashboardLoading />
 
+  if (boards.length < 1) return <main className='no-columns'><NoColumns disabled={true} /></main>
+
+  if (currentBoard.columns.length < 1) return <main className='no-columns'><NoColumns /></main>
+
   return (
-    <main className={mainClassName}>
-      {currentBoard.columns.length > 0 ? (
-        <>
-          {currentBoard.columns.map((column) => (
-            <Column
-              key={column._id}
-              column={column}
-            />
-          ))}
-          <button className='column add-new-column' onClick={addColumn}>
-            + New Column
-          </button>
-        </>
-      ) : (
-        <NoColumns />
-      )}
+    <main className='columns'>
+      {currentBoard.columns.map((column) => (
+        <Column
+          key={column._id}
+          column={column}
+        />
+      ))}
+      <button className='column add-new-column' onClick={addColumn}>
+        + New Column
+      </button>
     </main>
   )
 }

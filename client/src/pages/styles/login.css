@@ -1,0 +1,53 @@
+.login {
+  margin: 0 auto;
+  max-width: 416px;
+  width: calc(100% - 40px);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.logo-container {
+  padding-left: 14px;
+  align-self: flex-start;
+  transform: scale(1.2);
+}
+
+.no-account {
+  color: var(--clr-text);
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+}
+
+.no-account-btn {
+  color: var(--clr-variant);
+  border: 0;
+  background-color: transparent;
+  font-weight: 700;
+}
+
+.no-account-btn:hover {
+  color: var(--clr-variantHover);
+}
+
+.color-red {
+  color: var(--clr-red);
+}
+
+.loading-auth {
+  aspect-ratio: 1 / 1;
+  width: 23px;
+  border: 2px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: rotate-auth 800ms ease infinite;
+}
+
+@keyframes rotate-auth {
+  to {
+    transform: rotate(360deg);
+  }
+}

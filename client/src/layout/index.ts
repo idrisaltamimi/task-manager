@@ -1,0 +1,6 @@
+export { default as Header } from './Header/Header'
+export { default as Main } from './Main/Main'
+export { default as AddBoard } from './formModals/AddBoard'
+export { default as AddTask } from './formModals/AddTask'
+export { default as SubtaskModal } from './formModals/SubtaskModal'
+export { default as Intro } from './Intro/Intro'

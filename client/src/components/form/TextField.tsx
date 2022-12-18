@@ -13,9 +13,11 @@ interface Props {
   required: boolean
   autoFocus?: boolean
   id: string
+  name?: string
   textField: textField
   fn?: (e: React.ChangeEvent<HTMLInputElement>) => void
   type: string
+  passwordAreDifferent?: boolean
 }
 
 const TextField: React.FC<Props> = ({
@@ -24,9 +26,11 @@ const TextField: React.FC<Props> = ({
   required,
   autoFocus = false,
   id,
+  name,
   textField: { value, error },
   fn,
-  type
+  type,
+  passwordAreDifferent
 }) => {
   const textfieldRef = useRef<HTMLInputElement>(null)
 
@@ -43,9 +47,10 @@ const TextField: React.FC<Props> = ({
   return (
     <div className='form-control-textfield'>
       {label !== '' && <label className='label' htmlFor={id}>{label}</label>}
-      <div className={`${invalidClassName}`}>
+      <div className={`${invalidClassName}`} data-attr={passwordAreDifferent ? 'Passwords don’t match' : 'Can’t be empty'}>
         <input
           id={id}
+          name={name}
           className={`text-field`}
           placeholder={placeholder}
           required={required}

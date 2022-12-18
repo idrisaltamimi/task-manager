@@ -8,9 +8,10 @@ import './styles/dropMenu.css'
 interface Props {
   board?: boolean
   task?: boolean
+  disabled?: boolean
 }
 
-const DropMenu: React.FC<Props> = ({ board = false, task = false }) => {
+const DropMenu: React.FC<Props> = ({ board = false, task = false, disabled = false }) => {
   const { deleteBoard, updateBoard, currentColumn, currentBoard, currentTask } = useContext(ActionsContext) as ActionsContextType
   const { addColumn, closeModal, editTaskModal } = useContext(PortalContext) as PortalContextType
 
@@ -46,7 +47,7 @@ const DropMenu: React.FC<Props> = ({ board = false, task = false }) => {
 
   return (
     <div className='drop-menu-container'>
-      <button type='button' className='edit-btn' onClick={toggleDropMenu}>
+      <button type='button' disabled={disabled} className='edit-btn' onClick={toggleDropMenu}>
         <img src={verticalEllipsis} alt='' />
       </button>
 

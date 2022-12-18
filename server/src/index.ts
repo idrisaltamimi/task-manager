@@ -11,6 +11,7 @@ const __dirname = path.dirname(__filename)
 dotenv.config({ path: `${__dirname}/../.env` })
 
 import boardRoutes from './routes/boards.js'
+import userRoutes from './routes/user.js'
 
 const app = express()
 dotenv.config()
@@ -22,6 +23,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/boards', boardRoutes)
+app.use('/auth', userRoutes)
 
 app.get('/', (req, res) => {
   res.send('App is running')

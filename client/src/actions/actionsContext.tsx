@@ -1,11 +1,30 @@
 import { createContext, ReactElement, SetStateAction, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import * as api from '../api'
 import { BoardType, ColumnType, TaskType } from '../constants'
 import { getId } from '../utils'
 
+export interface userLoginType {
+  result: { _id: string, username: string, password: string },
+  token: string
+}
+
+export interface userType {
+  username: string,
+  password: string
+}
+
+export interface newUserType {
+  username: string,
+  password: string,
+  confirmPassword: string,
+}
+
 export interface ActionsContextType {
   boards: BoardType[]
+  user: any
+  userError: any
   currentBoard: BoardType
   currentColumn: ColumnType
   currentTask: TaskType
@@ -14,6 +33,10 @@ export interface ActionsContextType {
   createBoard: (newBoard: BoardType) => void
   updateBoard: (updatedBoard: BoardType) => void
   deleteBoard: () => void
+  removeUser: () => void
+  signIn: (user: userType) => void
+  signUp: (newUser: newUserType) => void
+  logout: () => void
   getCurrentBoard: (boardId: string) => void
   getCurrentColumn: (columnId: string) => void
   getCurrentTask: (task: TaskType) => void
@@ -27,11 +50,20 @@ const task = { _id: '', name: '', description: '', status: '', subtasks: [] }
 const ActionsContext = createContext<ActionsContextType | null>(null)
 
 const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
+  const navigate = useNavigate()
+
+  const storedUser = JSON.parse(localStorage.getItem('profile') || 'null')
+  const userJson = storedUser !== 'null' && storedUser
+
   const [boards, setBoards] = useState([])
+  const [user, setUser] = useState<userLoginType | null>(userJson?.data || userJson)
+  const [userError, setUserError] = useState<any>(null)
   const [currentBoard, setCurrentBoard] = useState<BoardType>(board)
   const [currentColumn, setCurrentColumn] = useState<ColumnType>(column)
   const [currentTask, setCurrentTask] = useState<TaskType>(task)
   const [isLoading, setIsLoading] = useState(false)
+
+  const removeUser = () => setUser(null)
 
   const getCurrentBoard = (boardId: string) => {
     if (boards.length < 1) return
@@ -46,7 +78,15 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     setCurrentTask(task)
   }
 
+  const logout = () => {
+    if (user?.result === undefined) {
+      navigate('/auth')
+      removeUser()
+    }
+  }
+
   const getBoards = async () => {
+    logout()
     setIsLoading(true)
     const { data } = await api.fetchBoards()
 
@@ -71,7 +111,6 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
   }
 
   const updateBoard = async (updatedBoard: BoardType) => {
-    console.log(updatedBoard)
     try {
       await api.updateBoard(getId(currentBoard._id), updatedBoard)
       getBoards()
@@ -91,13 +130,55 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     }
   }
 
+  const signIn = async (user: userType) => {
+    try {
+      setIsLoading(true)
+      const { data } = await api.signIn(user)
+
+      localStorage.setItem('profile', JSON.stringify({ data }))
+      setUser(data)
+      setIsLoading(false)
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+      if (error instanceof Error) {
+        setUserError(error)
+        setIsLoading(false)
+      }
+    }
+  }
+
+  const signUp = async (newUser: newUserType) => {
+    try {
+      setIsLoading(true)
+      const { data: { data } } = await api.signUp(newUser)
+
+      localStorage.setItem('profile', JSON.stringify({ data }))
+      setUser(data)
+      setIsLoading(false)
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+      if (error instanceof Error) {
+        setUserError(error)
+        setIsLoading(false)
+      }
+    }
+  }
+
   return (
     <ActionsContext.Provider value={{
       getBoards,
       createBoard,
       updateBoard,
       deleteBoard,
+      removeUser,
+      signIn,
+      signUp,
+      logout,
       boards,
+      user,
+      userError,
       currentBoard,
       currentColumn,
       currentTask,

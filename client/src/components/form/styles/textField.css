@@ -57,7 +57,7 @@
 }
 
 .invalid-text::after {
-  content: 'Can’t be empty';
+  content: attr(data-attr);
   position: absolute;
   width: 100%;
   height: 100%;
