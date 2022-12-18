@@ -2,7 +2,7 @@ import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import App from './App'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom'
 import { ActionsContextProvider } from './actions'
 import { ThemeContextProvider, PortalContextProvider } from './context'
 import { Intro } from './components/ui'
