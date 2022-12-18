@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
 
-import { ActionsContext, ActionsContextType } from '../../actions'
 import { PortalContext, PortalContextType } from '../../context'
 import { verticalEllipsis } from '../../assets'
 import './styles/dropMenu.css'
@@ -12,11 +11,8 @@ interface Props {
 }
 
 const DropMenu: React.FC<Props> = ({ board = false, task = false, disabled = false }) => {
-  const { deleteBoard, updateBoard, currentColumn, currentBoard, currentTask } = useContext(ActionsContext) as ActionsContextType
-  const { addColumn, closeModal, editTaskModal } = useContext(PortalContext) as PortalContextType
-
+  const { addColumn, closeModal, editTaskModal, openDeleteModal } = useContext(PortalContext) as PortalContextType
   const [dropMenu, setDropMenu] = useState(false)
-  const [removeLoading, setRemoveLoading] = useState(false)
 
   const toggleDropMenu = () => setDropMenu(prev => !prev)
 
@@ -29,18 +25,9 @@ const DropMenu: React.FC<Props> = ({ board = false, task = false, disabled = fal
     setDropMenu(false)
   }
 
-  const remove = async () => {
-    const newTasks = currentColumn.tasks?.filter(({ _id }) => _id !== currentTask._id)
-    const newColumns = currentBoard.columns?.map((item) => (
-      item._id === currentColumn._id ? { ...item, tasks: newTasks } : item
-    ))
-
-    setRemoveLoading(true)
-    board && await deleteBoard()
-    task && await updateBoard({ ...currentBoard, columns: newColumns })
-    setRemoveLoading(false)
+  const remove = () => {
+    openDeleteModal(board, task)
     setDropMenu(false)
-    closeModal()
   }
 
   const containerClassName = board ? 'drop-menu' : 'drop-menu drop-menu-task'
@@ -57,7 +44,6 @@ const DropMenu: React.FC<Props> = ({ board = false, task = false, disabled = fal
             <button type='button' onClick={edit}>{board ? 'Edit Board' : 'Edit Task'}</button>
             <button type='button' className='remove-btn' onClick={remove}>
               {board ? 'Delete Board' : 'Delete Task'}
-              {removeLoading && <div className='remove-loading' />}
             </button>
           </div>
           <div className='drop-menu-overlay' onClick={() => setDropMenu(false)} />

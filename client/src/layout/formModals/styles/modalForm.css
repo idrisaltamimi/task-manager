@@ -53,6 +53,22 @@
   width: 100%;
 }
 
+/* delete modal */
+.modal-title-delete {
+  color: var(--clr-red);
+}
+
+.delete-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.delete-container>* {
+  width: 100%;
+}
+
 /* submit loading */
 .submit-loading {
   margin: 0 auto;
@@ -88,6 +104,10 @@
   .vertical-btn {
     width: 61px;
     padding: 0 32.38px 0 24px;
+  }
+
+  .delete-container {
+    flex-direction: row;
   }
 }
 

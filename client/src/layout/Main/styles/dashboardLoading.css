@@ -76,3 +76,15 @@
     left: 150%;
   }
 }
+
+@media (max-width: 375px) {
+  .tasks-loading-hide1 {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .tasks-loading-hide2 {
+    display: none;
+  }
+}

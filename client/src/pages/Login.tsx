@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { ActionsContext, ActionsContextType } from '../actions'
 import { TextField } from '../components/form'
-import { Button, Logo } from '../components/ui'
+import { Button, Logo, Processing } from '../components/ui'
 import './styles/login.css'
 
 const Login = () => {
@@ -109,7 +109,7 @@ const Login = () => {
       }
 
       <Button
-        text={isLoading ? <div className='loading-auth' /> : (userIsSigned ? 'Login' : 'Sign Up')}
+        text={isLoading ? <Processing color='white' /> : (userIsSigned ? 'Login' : 'Sign Up')}
         size='small'
         theme='main'
       />

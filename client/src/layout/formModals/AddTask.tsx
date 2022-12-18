@@ -4,7 +4,7 @@ import uuid from 'react-uuid'
 import { ActionsContext, ActionsContextType } from '../../actions'
 import { PortalContext, PortalContextType } from '../../context'
 import { Select, TextArea, TextField, TextfieldGroup } from '../../components/form'
-import { Button, Modal } from '../../components/ui'
+import { Button, Modal, Processing } from '../../components/ui'
 import { useForm } from '../../hooks'
 import { getId } from '../../utils'
 import './styles/modalForm.css'
@@ -107,7 +107,7 @@ const AddTask = () => {
           toggleMenu={toggleMenu}
         />
         <Button
-          text={submitLoading ? <div className='submit-loading' /> : editTask ? 'Save Changes' : 'Create Task'}
+          text={submitLoading ? <Processing color='white' /> : editTask ? 'Save Changes' : 'Create Task'}
           size='small'
           theme='main'
           fullWidth={true}

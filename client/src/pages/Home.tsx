@@ -2,14 +2,14 @@ import React, { useContext, useEffect } from 'react'
 
 import { PortalContext, PortalContextType, ThemeContext, ThemeContextType } from '../context'
 import { ActionsContext, ActionsContextType } from '../actions'
-import { AddBoard, AddTask, SubtaskModal } from '../layout/formModals'
+import { AddBoard, AddTask, DeleteModal, SubtaskModal } from '../layout/formModals'
 import { showSidebarIcon } from '../assets'
 import { Header } from '../layout/Header'
 import { Main } from '../layout/Main'
 
 const Home = () => {
   const { checkIfTokenExpired } = useContext(ActionsContext) as ActionsContextType
-  const { boardModal, taskModal, subtaskModal } = useContext(PortalContext) as PortalContextType
+  const { boardModal, taskModal, subtaskModal, deleteModal } = useContext(PortalContext) as PortalContextType
   const { toggleMenu } = useContext(ThemeContext) as ThemeContextType
 
   useEffect(() => {
@@ -32,6 +32,8 @@ const Home = () => {
       {taskModal && <AddTask />}
 
       {subtaskModal && <SubtaskModal />}
+
+      {deleteModal && <DeleteModal />}
     </>
   )
 }

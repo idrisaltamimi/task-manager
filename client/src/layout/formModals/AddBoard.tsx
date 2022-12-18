@@ -1,7 +1,7 @@
 import React, { FormEvent, useContext } from 'react'
 import uuid from 'react-uuid'
 
-import { Button, Modal } from '../../components/ui'
+import { Button, Modal, Processing } from '../../components/ui'
 import { TextField, TextfieldGroup } from '../../components/form'
 import { PortalContext, PortalContextType } from '../../context'
 import { ActionsContext, ActionsContextType } from '../../actions'
@@ -81,7 +81,7 @@ const AddBoard = () => {
         />
 
         <Button
-          text={submitLoading ? <div className='submit-loading' /> : editBoard ? 'Save Changes' : 'Create New Board'}
+          text={submitLoading ? <Processing color='white' /> : editBoard ? 'Save Changes' : 'Create New Board'}
           size='small'
           theme='main'
           fullWidth={true}

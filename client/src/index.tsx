@@ -5,8 +5,8 @@ import App from './App'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ActionsContextProvider } from './actions'
 import { ThemeContextProvider, PortalContextProvider } from './context'
+import { Intro } from './components/ui'
 import './index.css'
-import { Intro } from './layout'
 
 const root = createRoot(
   document.getElementById('root') as HTMLElement

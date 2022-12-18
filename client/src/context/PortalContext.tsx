@@ -9,10 +9,12 @@ export interface PortalContextType {
   editTask: boolean
   taskModal: boolean
   subtaskModal: boolean
+  deleteModal: boolean
   addBoardModal: () => void
   addTaskModal: () => void
   editTaskModal: () => void
   openSubtaskModal: () => void
+  openDeleteModal: (board: boolean, task: boolean) => void
   addColumn: () => void
   closeModal: () => void
   closeAndPost: (updatedBoard: BoardType) => void
@@ -29,6 +31,7 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
   const [boardModal, setBoardModal] = useState(false)
   const [taskModal, setTaskModal] = useState(false)
   const [subtaskModal, setSubtaskModal] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false)
   const [editBoard, setEditBoard] = useState(false)
   const [editTask, setEditTask] = useState(false)
 
@@ -38,10 +41,21 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
 
   const addTaskModal = () => setTaskModal(true)
 
+  const openDeleteModal = (board: boolean, task: boolean) => {
+    setDeleteModal(true)
+    board && setEditBoard(true)
+    if (task) {
+      setSubtaskModal(false)
+      setEditTask(true)
+    }
+  }
+
+
   const editTaskModal = () => {
     addTaskModal()
     setEditTask(true)
   }
+
   const openSubtaskModal = () => setSubtaskModal(true)
 
   const closeModal = () => {
@@ -50,6 +64,7 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
     setTaskModal(false)
     setEditTask(false)
     setSubtaskModal(false)
+    setDeleteModal(false)
   }
 
   const closeAndPost = async (updatedBoard: BoardType) => {
@@ -69,10 +84,12 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
       taskModal,
       editTask,
       subtaskModal,
+      deleteModal,
       addBoardModal,
       addTaskModal,
       editTaskModal,
       openSubtaskModal,
+      openDeleteModal,
       addColumn,
       closeModal,
       closeAndPost
