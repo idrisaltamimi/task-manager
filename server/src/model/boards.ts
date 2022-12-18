@@ -18,7 +18,7 @@ const column = {
 }
 
 const boardsSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  userId: String,
   name: String,
   columns: [column],
   createdAt: {

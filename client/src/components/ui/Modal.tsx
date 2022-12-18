@@ -1,6 +1,7 @@
 
 import React, { useContext, useEffect } from 'react'
 import ReactDOM from 'react-dom'
+
 import { ActionsContext, ActionsContextType } from '../../actions'
 
 import './styles/modal.css'
@@ -12,11 +13,11 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = ({ children, close, menu }) => {
-  const { logout } = useContext(ActionsContext) as ActionsContextType
+  const { checkIfTokenExpired } = useContext(ActionsContext) as ActionsContextType
   const overlayRootEl = document.getElementById('portal')
 
   useEffect(() => {
-    logout()
+    checkIfTokenExpired()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

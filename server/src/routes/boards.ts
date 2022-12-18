@@ -4,7 +4,7 @@ import { createBoard, fetchBoards, updateBoard, deleteBoard } from '../controlle
 
 const router = express.Router()
 
-router.get('/', fetchBoards)
+router.get('/:userId', fetchBoards)
 router.post('/post', createBoard)
 router.patch('/:id', updateBoard)
 router.delete('/delete/:id', deleteBoard)

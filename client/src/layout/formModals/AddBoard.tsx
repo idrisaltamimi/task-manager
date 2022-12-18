@@ -6,10 +6,11 @@ import { TextField, TextfieldGroup } from '../../components/form'
 import { PortalContext, PortalContextType } from '../../context'
 import { ActionsContext, ActionsContextType } from '../../actions'
 import { useForm } from '../../hooks'
+import { getId } from '../../utils'
 import './styles/modalForm.css'
 
 const AddBoard = () => {
-  const { createBoard, currentBoard, updateBoard } = useContext(ActionsContext) as ActionsContextType
+  const { createBoard, currentBoard, updateBoard, user } = useContext(ActionsContext) as ActionsContextType
   const { closeModal, editBoard } = useContext(PortalContext) as PortalContextType
   const {
     name,
@@ -49,7 +50,7 @@ const AddBoard = () => {
       await updateBoard({ ...currentBoard, name: name, columns: newBoard })
     }
     else {
-      await createBoard({ name, columns: inputColumnsArray })
+      await createBoard({ name, columns: inputColumnsArray, userId: getId(user?.result._id) })
     }
 
     endLoading()

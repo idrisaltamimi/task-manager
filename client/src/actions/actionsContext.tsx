@@ -1,9 +1,17 @@
 import { createContext, ReactElement, SetStateAction, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import decode from 'jwt-decode'
 
 import * as api from '../api'
 import { BoardType, ColumnType, TaskType } from '../constants'
 import { getId } from '../utils'
+
+interface tokenType {
+  username: string,
+  _id: string,
+  exp: number,
+  iat: number,
+}
 
 export interface userLoginType {
   result: { _id: string, username: string, password: string },
@@ -33,17 +41,16 @@ export interface ActionsContextType {
   createBoard: (newBoard: BoardType) => void
   updateBoard: (updatedBoard: BoardType) => void
   deleteBoard: () => void
-  removeUser: () => void
+  checkIfTokenExpired: () => void
   signIn: (user: userType) => void
   signUp: (newUser: newUserType) => void
-  logout: () => void
   getCurrentBoard: (boardId: string) => void
   getCurrentColumn: (columnId: string) => void
   getCurrentTask: (task: TaskType) => void
   setCurrentTask: SetStateAction<any>
 }
 
-const board = { name: '', _id: '', createdAt: '', columns: [] }
+const board = { name: '', _id: '', userId: '', createdAt: '', columns: [] }
 const column = { name: '', _id: '', tasks: [] }
 const task = { _id: '', name: '', description: '', status: '', subtasks: [] }
 
@@ -63,8 +70,6 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
   const [currentTask, setCurrentTask] = useState<TaskType>(task)
   const [isLoading, setIsLoading] = useState(false)
 
-  const removeUser = () => setUser(null)
-
   const getCurrentBoard = (boardId: string) => {
     if (boards.length < 1) return
     setCurrentBoard(boards.find(({ _id }) => _id === boardId) || board)
@@ -78,21 +83,37 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     setCurrentTask(task)
   }
 
-  const logout = () => {
+  const checkIfTokenExpired = () => {
     if (user?.result === undefined) {
-      navigate('/auth')
-      removeUser()
+      navigate('/')
+      setUser(null)
+      setIsLoading(false)
+      return false
+    }
+
+    const token = user?.token
+    if (token) {
+      const decodedToken = decode<tokenType>(token)
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        navigate('/')
+        setUser(null)
+        setIsLoading(false)
+        return true
+      }
+      return false
     }
   }
 
   const getBoards = async () => {
-    logout()
+    if (checkIfTokenExpired()) return
+
     setIsLoading(true)
-    const { data } = await api.fetchBoards()
+    const { data } = await api.fetchBoards(getId(user?.result._id))
 
     try {
-      setBoards(data)
-      setCurrentBoard(data[0])
+      setBoards(data === null ? [] : data)
+      setCurrentBoard(data.length > 0 && data[0])
       setIsLoading(false)
 
     } catch (error) {
@@ -101,6 +122,8 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
   }
 
   const createBoard = async (newBoard: BoardType) => {
+    if (checkIfTokenExpired()) return
+
     try {
       await api.createBoard(newBoard)
       getBoards()
@@ -111,6 +134,8 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
   }
 
   const updateBoard = async (updatedBoard: BoardType) => {
+    if (checkIfTokenExpired()) return
+
     try {
       await api.updateBoard(getId(currentBoard._id), updatedBoard)
       getBoards()
@@ -121,6 +146,8 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
   }
 
   const deleteBoard = async () => {
+    if (checkIfTokenExpired()) return
+
     try {
       await api.deleteBoard(getId(currentBoard._id))
       getBoards()
@@ -138,7 +165,7 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
       localStorage.setItem('profile', JSON.stringify({ data }))
       setUser(data)
       setIsLoading(false)
-      navigate('/')
+      navigate('/home')
     } catch (error) {
       console.log(error)
       if (error instanceof Error) {
@@ -156,7 +183,7 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
       localStorage.setItem('profile', JSON.stringify({ data }))
       setUser(data)
       setIsLoading(false)
-      navigate('/')
+      navigate('/home')
     } catch (error) {
       console.log(error)
       if (error instanceof Error) {
@@ -172,10 +199,9 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
       createBoard,
       updateBoard,
       deleteBoard,
-      removeUser,
+      checkIfTokenExpired,
       signIn,
       signUp,
-      logout,
       boards,
       user,
       userError,

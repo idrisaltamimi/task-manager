@@ -17,7 +17,7 @@ const Login = () => {
   const [invalidPassword, setInvalidPassword] = useState(false)
 
   useEffect(() => {
-    if (user) return navigate('/')
+    if (user) return navigate('/home')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

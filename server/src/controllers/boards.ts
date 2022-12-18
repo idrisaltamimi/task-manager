@@ -3,8 +3,9 @@ import mongoose from 'mongoose'
 import Boards from '../model/boards.js'
 
 export const fetchBoards = async (req, res) => {
+  const { userId } = req.params
   try {
-    const boards = await Boards.find().sort({ createdAt: -1 })
+    const boards = await Boards.find({ userId }).sort({ createdAt: -1 })
 
     res.status(200).json(boards)
   } catch (error) {

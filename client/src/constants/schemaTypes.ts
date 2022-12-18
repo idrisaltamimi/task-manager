@@ -19,6 +19,7 @@ export interface ColumnType {
 }
 
 export interface BoardType {
+  userId: string,
   createdAt?: string,
   _id?: string
   name: string
