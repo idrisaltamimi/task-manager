@@ -28,10 +28,11 @@ const AddTask = () => {
     editTask ? currentTask.subtasks : [{ _id: uuid(), name: '', isCompleted: false }]
   )
 
-  const currentTaskStatus = editTask ?
-    { _id: getId(currentColumn._id), name: currentColumn.name } :
-    { _id: getId(currentBoard.columns[0]._id), name: currentBoard.columns[0].name }
   const options = currentBoard.columns.map(({ name, _id }) => ({ name, _id: getId(_id) }))
+
+  const currentTaskStatus = currentColumn._id === '' ?
+    { _id: getId(currentBoard.columns[0]._id), name: currentBoard.columns[0].name } :
+    { _id: getId(currentColumn._id), name: currentColumn.name }
 
   const [current, setCurrent] = useState(currentTaskStatus)
   const [description, setDescription] = useState(editTask ? currentTask.description : '')

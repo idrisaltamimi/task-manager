@@ -52,8 +52,8 @@
   outline-offset: 0px;
 }
 
-.invalid-text {
-  outline: 1px solid var(--clr-red);
+.invalid-textfield {
+  border-color: var(--clr-red);
 }
 
 .invalid-text::after {
@@ -84,9 +84,9 @@
   pointer-events: none;
 }
 
-.invalid-text:hover,
-.invalid-text:focus {
-  border: 0;
-  outline: 1px solid var(--clr-red);
+.invalid-textfield:hover,
+.invalid-textfield:focus {
+  border-color: var(--clr-red);
+  outline: 0;
   outline-offset: 0px;
 }

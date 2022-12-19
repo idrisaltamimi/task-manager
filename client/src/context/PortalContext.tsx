@@ -27,7 +27,7 @@ interface Props {
 const PortalContext = createContext<PortalContextType | null>(null)
 
 const PortalContextProvider: React.FC<Props> = ({ children }) => {
-  const { updateBoard } = useContext(ActionsContext) as ActionsContextType
+  const { updateBoard, resetCurrentColumn } = useContext(ActionsContext) as ActionsContextType
   const [boardModal, setBoardModal] = useState(false)
   const [taskModal, setTaskModal] = useState(false)
   const [subtaskModal, setSubtaskModal] = useState(false)
@@ -65,11 +65,13 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
     setEditTask(false)
     setSubtaskModal(false)
     setDeleteModal(false)
+    resetCurrentColumn()
   }
 
   const closeAndPost = async (updatedBoard: BoardType) => {
     updateBoard(updatedBoard)
     setSubtaskModal(false)
+    resetCurrentColumn()
   }
 
   const addColumn = () => {

@@ -47,6 +47,7 @@ export interface ActionsContextType {
   getCurrentBoard: (boardId: string) => void
   getCurrentColumn: (columnId: string) => void
   getCurrentTask: (task: TaskType) => void
+  resetCurrentColumn: () => void
   setCurrentTask: SetStateAction<any>
 }
 
@@ -74,6 +75,8 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
     if (boards.length < 1) return
     setCurrentBoard(boards.find(({ _id }) => _id === boardId) || board)
   }
+
+  const resetCurrentColumn = () => setCurrentColumn(column)
 
   const getCurrentColumn = (columnId: string) => {
     setCurrentColumn(currentBoard.columns.find(({ _id }) => _id === columnId) || column)
@@ -212,6 +215,7 @@ const ActionsContextProvider = ({ children }: { children: ReactElement }) => {
       getCurrentColumn,
       getCurrentTask,
       setCurrentTask,
+      resetCurrentColumn,
       isLoading,
     }}>
       {children}

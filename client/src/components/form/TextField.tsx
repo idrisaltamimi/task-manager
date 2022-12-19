@@ -43,6 +43,7 @@ const TextField: React.FC<Props> = ({
   }, [error])
 
   const invalidClassName = error ? 'invalid-text textfield-container' : 'textfield-container'
+  const invalidInputClassName = error ? 'text-field invalid-textfield' : 'text-field'
 
   return (
     <div className='form-control-textfield'>
@@ -51,7 +52,7 @@ const TextField: React.FC<Props> = ({
         <input
           id={id}
           name={name}
-          className={`text-field`}
+          className={invalidInputClassName}
           placeholder={placeholder}
           required={required}
           value={value}
