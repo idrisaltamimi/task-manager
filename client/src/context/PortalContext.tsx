@@ -59,11 +59,11 @@ const PortalContextProvider: React.FC<Props> = ({ children }) => {
   const openSubtaskModal = () => setSubtaskModal(true)
 
   const closeModal = () => {
+    if (subtaskModal) return setSubtaskModal(false)
     setBoardModal(false)
     setEditBoard(false)
     setTaskModal(false)
     setEditTask(false)
-    setSubtaskModal(false)
     setDeleteModal(false)
     resetCurrentColumn()
   }

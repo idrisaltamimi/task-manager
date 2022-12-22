@@ -26,13 +26,13 @@ const ThemeContextProvider = ({ children }: { children: ReactElement }) => {
     })
   }
 
-  const modeClassName = toggleDarkMode ? 'dark-mode' : ''
+  const modeClassName = toggleDarkMode ? '' : 'dark-mode'
 
   useEffect(() => {
     document.body.className = modeClassName
   }, [modeClassName])
 
-  const currentLogo = toggleDarkMode ? logoLight : logoDark
+  const currentLogo = toggleDarkMode ? logoDark : logoLight
 
   const toggleMenu = () => setShowSidebar((prev) => !prev)
   const hideMenu = () => setShowSidebar(false)

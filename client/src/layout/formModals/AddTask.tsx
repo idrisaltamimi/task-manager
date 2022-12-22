@@ -56,10 +56,16 @@ const AddTask = () => {
       const newTasks = currentColumn.tasks?.map((item) => (
         item._id === currentTask._id ? { ...item, ...newTask } : item
       ))
+
+      const oldTasks = currentColumn.tasks?.filter(({ _id }) => _id !== currentTask._id)
+
       const newColumns = currentBoard.columns.map((item) => (
-        item._id === currentColumn._id ? { ...item, tasks: newTasks } : item
+        (item._id === currentColumn._id && currentColumn._id !== current._id) ? { ...item, tasks: oldTasks } :
+          item._id === current._id ? { ...item, tasks: newTasks } : item
       ))
+
       await updateBoard({ ...currentBoard, columns: newColumns })
+
     } else {
       const newColumns = currentBoard.columns
       await newColumns.forEach(({ _id, tasks }) => current._id === _id && tasks?.push(newTask))
