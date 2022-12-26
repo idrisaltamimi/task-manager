@@ -31,7 +31,7 @@
   font-size: 13px;
   line-height: 23px;
   color: var(--clr-text);
-  background-color: transparent;
+  background-color: var(--clr-modal);
   border-radius: 4px;
 }
 
