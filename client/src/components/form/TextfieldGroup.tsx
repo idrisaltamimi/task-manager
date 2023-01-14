@@ -11,9 +11,10 @@ interface Props {
   placeholder: string[]
   inputList: Array<any>
   setInputList: SetStateAction<any>
+  label: string
 }
 
-const TextfieldGroup: React.FC<Props> = ({ buttonValue, placeholder, inputList, setInputList, name: title }) => {
+const TextfieldGroup: React.FC<Props> = ({ buttonValue, placeholder, inputList, setInputList, name: title, label }) => {
   const addInput = () => {
     const _id = uuid()
     setInputList((prev: any) => [
@@ -52,7 +53,7 @@ const TextfieldGroup: React.FC<Props> = ({ buttonValue, placeholder, inputList, 
 
   return (
     <div className='add-columns-container'>
-      <label className='label'>Columns</label>
+      <label className='label'>{label}</label>
       <div className='group-items'>
         {inputList.map(({ name, _id, error }: { name: string, _id: string, error: boolean }, index) => (
           <div key={_id} className='group-item'>

@@ -98,7 +98,8 @@ const AddTask = () => {
           fn={(e) => setDescription(e.target.value)}
         />
         <TextfieldGroup
-          buttonValue='+ Add New Column'
+          label='Subtasks'
+          buttonValue='+ Add New Subtask'
           placeholder={['e.g. Make coffee', 'e.g. Drink coffee & smile']}
           inputList={inputList}
           setInputList={setInputList}

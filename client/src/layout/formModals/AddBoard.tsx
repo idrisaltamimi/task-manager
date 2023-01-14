@@ -73,6 +73,7 @@ const AddBoard = () => {
         />
 
         <TextfieldGroup
+          label='Columns'
           buttonValue='+ Add New Column'
           placeholder={['e.g. Todo', 'e.g. Doing', 'e.g. Done']}
           inputList={inputList}
